@@ -1,0 +1,33 @@
+; project configuration (do not delete)
+
+(compiler
+
+    (alias "gcc/classic/stable")
+
+    (makefile "makefiles/gcc-classic-stable/makefile")
+
+    (make "make -f %makefile %target")
+
+    (executable "bin/gcc-classic-stable/AmiCSwordLibrary")
+
+    (stack "65536")
+
+    (target "")
+
+    (arguments "")
+
+    (options
+
+        "-IWork:_sources/AmiSwordLibrary/include/"
+
+        "-pedantic"
+
+        "-std=gnu9x"
+
+        "-lauto"
+
+        "-noixemul"
+
+        "-m68020"
+    )
+)

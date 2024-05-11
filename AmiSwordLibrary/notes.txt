@@ -1,0 +1,9 @@
+Notes:
+
+- regex disabled in swmodule.
+could be possible to bring it in via Aminet regexp library.
+
+
+
+
+

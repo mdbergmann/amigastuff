@@ -1,0 +1,157 @@
+
+@APPAUTHOR      "Manfred Bergmann"
+@APPCOPYRIGHT   "Manfred Bergmann © 2018,2019"
+@APPTITLE       "Gomoku"
+@APPVERSION     "$VER: 1.2 (1.1.2019)"
+@VERSION        1,2
+@DISPLAY { Title = "HollyGomoku", Width = 400, Height = 460, Color = #BLUE }
+
+@INCLUDE "Game.hws"
+
+;;; "source code"
+Local game = Game:New()
+
+Local boardHeight = 400
+Local topBarHeight = 30
+Local bottomOffset = topBarHeight + boardHeight
+Local bottomBarHeight = 30
+Local fullHeight = boardHeight + topBarHeight + bottomBarHeight
+Local cellCount = game.board.width + 1
+Local cellHeight = boardHeight / cellCount
+DebugPrint("CellHeight: ", cellHeight)
+
+Local statusText = ""
+
+Function PaintTopBar()
+    SetFillStyle(#FILLCOLOR)
+    Box(0, 0, boardHeight, topBarHeight-1, #BLUE)
+
+    PaintTopLabel()
+EndFunction
+
+Function PaintTopLabel()
+    TextOut(#CENTER, (topBarHeight/2)-2, statusText)
+EndFunction
+
+Function PaintBottomBar()
+    SetFillStyle(#FILLCOLOR)
+    Box(0, bottomOffset, boardHeight, bottomBarHeight-1, #BLUE)
+
+    PaintBottomBarButton()
+EndFunction
+
+BottomBarButtonRect = {x = 20, y = bottomOffset+5, width = boardHeight-40, height = bottomBarHeight-10}
+Function PaintBottomBarButton()
+    Box(BottomBarButtonRect.x, BottomBarButtonRect.y, BottomBarButtonRect.width, BottomBarButtonRect.height, #YELLOW)
+    TextOut(#CENTER, bottomOffset+(bottomBarHeight/2)-2, "Press here to start new game", {color = $00000000})
+EndFunction
+
+Function PaintGrid()
+    SetFillStyle(#FILLCOLOR)
+    Box(0, topBarHeight, boardHeight, boardHeight, $ffdd88)
+
+    Local xPos, xPos1, xPos2, yPos, yPos1, yPos2
+    ; drawing vertical lines
+    For i = 1 To cellCount
+        xPos = i*cellHeight
+        yPos1 = cellHeight + topBarHeight
+        yPos2 = boardHeight - cellHeight + topBarHeight
+        Line(xPos, yPos1, xPos, yPos2)
+    Next
+
+    ; drawing horizontal lines
+    For i = 1 To cellCount
+        xPos1 = cellHeight
+        xPos2 = boardHeight - cellHeight
+        yPos = i*cellHeight + topBarHeight
+        Line(xPos1, yPos, xPos2, yPos)
+    Next
+
+    ; draw stones
+    For col = 0 To game.board.width-1
+        For row = 0 To game.board.height-1
+            Local playerStone = game.board:Get(col, row)
+            If playerStone <> #PLAYER_EMPTY
+                Local radius = cellHeight / 2.5
+                Local centerPointX = (col+1)*cellHeight - radius
+                Local centerPointY = (row+1)*cellHeight + topBarHeight - radius
+
+                Local stoneCol
+                If playerStone = #PLAYER_WHITE
+                    stoneCol = #WHITE
+                Else
+                    stoneCol = #BLACK
+                EndIf
+
+                Circle(centerPointX, centerPointY, radius, stoneCol)
+            EndIf
+        Next
+    Next
+EndFunction
+
+Function PaintPlayArea()
+    DebugPrint(GetDate(#DATELOCAL), "PaintPlayArea...")
+
+    PaintTopBar()
+    PaintGrid()
+    PaintBottomBar()
+
+    DebugPrint(GetDate(#DATELOCAL), "PaintPlayArea...done")
+EndFunction
+
+Function BottomBarButtonClicked(x, y)
+    DebugPrint(GetDate(#DATELOCAL), "Bottom bar btn clicked...")
+    game:Reset()
+EndFunction
+
+Function GridClicked(x, y)
+    Local clickedCol = Int((x - cellHeight) / cellHeight + 0.5)
+    Local clickedRow = Int(((y - topBarHeight) - cellHeight) / cellHeight + 0.5)
+
+    DebugPrint(GetDate(#DATELOCAL), "Clicked: x: ", x, "y: ", y, "col: ", clickedCol, "row: ", clickedRow)
+
+    DebugPrint(GetDate(#DATELOCAL), "Taking turn...")
+    game:TakeTurn(clickedCol, clickedRow)
+    DebugPrint(GetDate(#DATELOCAL), "Taking turn...done")
+EndFunction
+
+Function Clicked(x, y)
+    If x > BottomBarButtonRect.x And x < BottomBarButtonRect.x + BottomBarButtonRect.width And
+        y > BottomBarButtonRect.y And y < BottomBarButtonRect.y + BottomBarButtonRect.height
+        BottomBarButtonClicked(x, y)
+    Else
+        GridClicked(x, y)
+    EndIf
+EndFunction
+
+;;;
+
+;;; "main loop"
+
+DebugPrint(GetDate(#DATELOCAL), "Startup...")
+
+statusText = game:GetGameStatusTextAndSetActiveState()
+PaintPlayArea()
+
+Repeat
+    DebugPrint(GetDate(#DATELOCAL), "Waiting for left mouse...")
+    WaitLeftMouse
+    DebugPrint(GetDate(#DATELOCAL), "Left mouse pressed")
+
+    DebugPrint(GetDate(#DATELOCAL), "Determining mouse position...")
+    Local mX = MouseX()
+    Local mY = MouseY()
+    DebugPrint(GetDate(#DATELOCAL), "Determining mouse position...done")
+
+    ; when game is over we don't react to any input.
+    Local currentPlayer = game:WhooseTurn()
+    Local currentGameActive = game:IsActive()
+    Clicked(mX , mY)
+    statusText = game:GetGameStatusTextAndSetActiveState(currentPlayer)
+
+    If currentGameActive = True Or game:IsActive() = True
+        PaintPlayArea()
+    EndIf
+Forever
+
+;;;

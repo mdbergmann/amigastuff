@@ -1,0 +1,9 @@
+assert_test: assert_test.e asserts.m
+    ec assert_test.e
+
+asserts.m: asserts.e
+    ec asserts.e
+
+clean:
+    delete #?.m asserts_test
+

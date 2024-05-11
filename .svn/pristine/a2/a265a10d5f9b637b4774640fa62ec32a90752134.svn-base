@@ -1,0 +1,11 @@
+listfun_test: test/listfun_test.e src/listfun.m
+    cd test
+    evo listfun_test.e
+    cd /
+
+src/listfun.m: src/listfun.e
+    ec src/listfun.e
+
+clean:
+    delete src/#?.m test/#?.m test/listfun_test
+

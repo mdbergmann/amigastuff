@@ -1,0 +1,92 @@
+@INCLUDE "Game.hws"
+@INCLUDE "GameData.hws"
+
+Function TestWhiteStartsNewGame()
+    Local game = Game:New()
+    Assert(game:WhooseTurn() = #PLAYER_WHITE)
+EndFunction
+
+Function TestAfterTurn_IsOtherPlayersTurn()
+    Local game = Game:New()
+
+    game:TakeTurn(0,0)
+    Assert(game.board:Get(0,0) = #PLAYER_WHITE)
+    Assert(game:WhooseTurn() = #PLAYER_BLACK)
+
+    game:TakeTurn(1,0)
+    Assert(game.board:Get(1,0) = #PLAYER_BLACK)
+    Assert(game:WhooseTurn() = #PLAYER_WHITE)
+EndFunction
+
+Function TestGameStartsWithActiveState()
+    Local game = Game:New()
+
+    Assert(game:IsActive() = True)
+EndFunction
+
+Function TestCanSetActiveState()
+    Local game = Game:New()
+
+    game:SetActive(False)
+    Assert(game:IsActive() = False)
+EndFunction
+
+Function TestFormatOfPlayerStatus()
+    Local game = Game:New()
+
+    Assert(game:GetPlayerStatus(#PLAYER_WHITE) = "White's Turn")
+    Assert(game:GetPlayerStatus(#PLAYER_BLACK) = "Black's Turn")
+EndFunction
+
+Function TestFormatOfPlayerWinStatus()
+    Local game = Game:New()
+
+    Assert(game:GetWinStatus(#PLAYER_WHITE) = "White Wins!")
+    Assert(game:GetWinStatus(#PLAYER_BLACK) = "Black Wins!")
+EndFunction
+
+Function TestGetGameStatusText_NoWin()
+    Local game = Game:New()
+
+    Assert(game.rules:IsWin(game.board, #PLAYER_WHITE) = False)
+    Assert(game:GetGameStatusTextAndSetActiveState(#PLAYER_WHITE) = game:GetPlayerStatus(#PLAYER_WHITE))
+    Assert(game:IsActive() = True)
+EndFunction
+
+Function TestGetGameStatusText_Win()
+    Local game = Game:New()
+
+    game.board:Place(1,1,#PLAYER_WHITE)
+    game.board:Place(1,2,#PLAYER_WHITE)
+    game.board:Place(1,3,#PLAYER_WHITE)
+    game.board:Place(1,4,#PLAYER_WHITE)
+    game.board:Place(1,5,#PLAYER_WHITE)
+
+    Assert(game.rules:IsWin(game.board, #PLAYER_WHITE) = True)
+    Assert(game:GetGameStatusTextAndSetActiveState(#PLAYER_WHITE) = game:GetWinStatus(#PLAYER_WHITE))
+    Assert(game:IsActive() = False)
+EndFunction
+
+Function TestResetGame()
+    Local game = Game:New()
+
+    game:TakeTurn(0,0)
+    Assert(game.board:Get(0,0) = #PLAYER_WHITE)
+    Assert(game:WhooseTurn() = #PLAYER_BLACK)
+
+    game:Reset()
+    Assert(game.board:StonesPlaced() = 0)
+    Assert(game:WhooseTurn() = #PLAYER_WHITE)
+
+EndFunction
+
+TestFormatOfPlayerStatus()
+TestFormatOfPlayerWinStatus()
+TestGetGameStatusText_NoWin()
+TestGetGameStatusText_Win()
+
+TestWhiteStartsNewGame()
+TestAfterTurn_IsOtherPlayersTurn()
+TestGameStartsWithActiveState()
+TestCanSetActiveState()
+TestResetGame()

@@ -1,0 +1,26 @@
+
+MODULE '*/modules/asserts', '*/src/board'
+
+DEF cut: PTR TO board
+
+PROC testBoardCreate() HANDLE
+    NEW cut.create()
+    assertTrue(cut.size.width = 19, 'Not of right width!')
+    END cut
+
+EXCEPT
+    PrintF(exception)
+
+ENDPROC
+
+PROC main() HANDLE
+    PrintF('Testing Board...\n')
+
+    testBoardCreate()
+
+EXCEPT
+	PrintF(exception)
+
+    END cut
+ENDPROC
+

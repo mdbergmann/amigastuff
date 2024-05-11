@@ -1,0 +1,11 @@
+x_test: test/x_test.e src/x.m
+    cd test
+    ec x_test.e
+    cd /
+
+src/x.m: src/x.e
+    ec src/x.e
+
+clean:
+    delete src/#?.m test/#?.m test/x_test
+

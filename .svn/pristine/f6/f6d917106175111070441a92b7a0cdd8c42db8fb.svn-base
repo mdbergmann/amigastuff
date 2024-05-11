@@ -1,0 +1,119 @@
+Developing a Floating Point library in m68k assembler on Amiga
+
+
+Part 1 - some theory
+
+Someone told me lately (in fact it was 'Uncle Bob' in a YouTube video): "If you haven't developed a floating-point library, go home and do it.
+It's a nice weekend project."
+
+I followed this advice. But I took the hard way, in assembler. Motorola 68000 series, a very nice assembler btw.
+I do know it from my old Amiga times.
+
+So, while I was away on vacation I've developed this using pen and paper and only later wrote and tested
+it on one of my Amigas.
+
+I must say, it tool longer than a weekend. :) But it was a great experience.
+
+(I'm posting the full assembler source code at the end of the post.
+It was developed using the 'DevPac' Assembler. A well known macro assembler for the Amiga.)
+
+As the first part of this blog I'd like to write a little about theory of floating-point.
+But I'm assuming that you know what 'floating-point' numbers are.
+
+Floating point standards:
+
+There are quite some standard definitions of how a floating-point number can be represented in a computer.
+I've chosen the IEEE 754 32 bit single-precision standard (with some simplifications).
+Because the M68000 processor is 32 bit.
+
+IEEE 754 defines that of 32 bit there is (from high to low):
+- 1 bit for the sign (-/+)
+- 8 bit for the exponent
+- 23 bit for the mantissa
+
+The sign is pretty clear. The sign say of whether the number of positive or negative.
+
+The 8 bit exponent basically encodes the 'floating-point' shift value to the left and right.
+Shifting to the left means that a negative exponent has to be encoded.
+Shifting to the right a positive.
+In order to encode positive and negative values in 8 bit a so called 'biased-representation'
+is used. With a 'bias' value of 127 it's possible to encode numbers (and exponents) from -126 to 127.
+
+The 23 bit mantissa combines the integer part of the floating-point number and the fraction part.
+
+The integer part in the mantissa can go through a 'normalization' process, which means that the first '1' in a binary form of the number matters. And everything before that, considering the number is in a 32 bit register, is ignored.
+So only the size from the first '1' to the end of the integer part is taken into the mantissa.
+Considering that the integer part of a number must start with a binary '1' makes the definition of the 'hidden bit'.
+The 'hidden bit' assumes that there is always a '1' as the first bit of an integer number.
+So that IEEE 754 says that this first '1' does not need to be stored, hence saving one bit for the precision of the fraction part.
+(In this implementation we store the 'hidden bit' for simplicity).
+
+There is more to it, read upon it here if you want: https://en.wikipedia.org/wiki/IEEE_754
+
+
+
+Part 2 - the implementation - dec2bin
+
+Now, how does it work in practice to get a decimal number into the computer IEEE 754 representation.
+The library I've developed assumes that the integer part (left side of the comma) and the fraction part (right side of the comma)
+is delivered is separate CPU registers.
+
+The dec2bin (as I call it) assembler routine expects the integer and the fraction part of a number in different input registers.
+Say, the number is: 12.45
+Then 12 (including the sign) would be delivered in register d0
+And 45 in d1.
+
+Converting the integer part into binary form is pretty trivial. We just copy it into a register and that's it.
+The fraction part however is a little more tricky. Bringing it into a binary form requires some thought.
+Effectively the fraction part in binary form is (right of the comma): 2^-2, 2^-4, 2^-8, 2^-16, ...
+Which means, when setting the convention of allowing only 4 digits as the fraction part, effectively 4500,
+we'll have to calculate that into a binary form.
+
+I found that an algorithm that translates the fraction into binary form depends on the number of digits.
+The algorithm is as follows (assuming a 4 digit fraction part):
+---
+fraction part > 5000?
+if yes then mark a '1' and substract 5000 and shift 1 bit to the left
+if no then just shift 1 bit to the left
+(I'm assiming you know that shifting left means multiplication by factor 2)
+repeat
+---
+this can be done until there are no more bits in the fraction part.
+
+The divisor 5000 here, depends on the number of digits of the fraction part.
+If the number of digits are 1 the divisor is 5.
+If the number of digits are 2 the divisor is 50.
+And so forth.
+
+Here sis the code to calculate this:
+<code>
+	; now prepare fraction in d1
+
+.prepare_fract_bits
+
+	; the algorithm is to:
+	; check if d1 > 5000 (4 digits)
+	; if yes -> mark '1' and substract 5000
+	; if no  -> mark '0'
+	; shift left (times 2)
+	; repeat until no more available bits in mantisse, which here is d3
+
+	move.l	#5000,d4	; threshold
+.loop_fract_bits
+	subi.l	#1,d3		; d3 is position of where to set the bit that represents 5000
+	clr.l	d6
+	cmp.l	d4,d1
+	blt	.fract_under_threshold
+	sub.l	d4,d1
+	bset	d3,d6
+.fract_under_threshold
+	or.l	d6,d7
+	lsl.l	#1,d1		; d1 * 2
+	cmpi.l	#0,d3		; are we done?
+	bgt	.loop_fract_bits
+
+.prepare_fract_bits_end
+</code>
+
+
+

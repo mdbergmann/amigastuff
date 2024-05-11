@@ -1,0 +1,9 @@
+board_test: src/board_test.e modules/asserts.m src/board.m
+    ec src/board_test.e
+
+src/board.m: src/board.e
+    ec src/board.e
+
+clean:
+    delete src/#?.m src/board_test
+

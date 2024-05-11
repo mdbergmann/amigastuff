@@ -1,0 +1,41 @@
+Developing a Floating Point library in m68k assembler on Amiga
+
+
+Part 1 - some theory
+
+Someone told me lately: "If you haven't developed a floating-point library, go home and do it.
+It's a nice weekend project."
+
+I followed this advice. But I took the hard way, in assembler. Motorola 68000 series, a very nice assembler btw.
+I do know it from my old Amiga times.
+
+So, while I was away on vacation I've developed this using pen and paper and only later wrote and tested
+it on one of my Amigas.
+
+I must say, it tool longer than a weekend. :) But it was a great experience.
+
+As the first part of this blog I'd like to write a little about theory of floating-point.
+But I'm assuming that you know what 'floating-point' numbers are.
+
+Floating point standards:
+
+There are quite some standard definitions of how a floating-point number can be represented in a computer.
+I've chosen the IEEE 765 32 bit single-precision standard (with some simplifications).
+Because the 68000 processor is 32 bit.
+
+IEEE 765 defines that of 32 bit there is:
+- 1 bit for the sign (-/+)
+- 8 bit for the exponent
+- 23 bit for the mantissa
+
+The sign is pretty clear. The sign say of whether the number of positive or negative.
+
+The 8 bit exponent basically encodes the 'floating-point' shift value to the left and right.
+Shifting to the left means that a negative exponent has to be encoded.
+Shifting to the right a positive.
+In order to encode positive and negative values in 8 bit a so called 'biased-representation'
+is used. With a 'bias' value of 127 it^s possible to encode numbers from -126 to 127.
+
+The 23 bit mantissa combines the integer part of the floating-point number and the fraction part.
+
+The integer part in the mantissa can be 'normalized', which means that

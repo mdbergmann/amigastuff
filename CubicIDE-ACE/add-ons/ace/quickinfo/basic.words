@@ -1,0 +1,157 @@
+ABS( absolute_value = ABS(<num-expression>) : ABS() returns the absolute value of its argument.
+ADD ADD <variable>, <num-expression> : ADD adds to the specified variable.
+ADDRESS ADDRESS <dde-port> : ADDRESS selects the specifed DDE port (Rexx-Port ON Amiga computers) FOR receiving commands.
+AND AND is the binary AND operator.
+ARG$( startup_argument$ = ARG$(<argument-number>) : ARG$() returns the <argument-number>th startup argument.
+ASC( ascii_code = ASC(<string-expression>) : ASC() returns the ASCII code of the first character of its argument.
+ATN( arcus-tangens = ATN(<rad-expression>) : ATN() returns the arcus tangens of its radian argument (0...2PI).
+BCLR( result = BCLR(<integer-expression>, <bit-number>) : BCLR() returns the value of <integer-expression> minus the specified bit (that bit set to zero).
+BIN$( binary_string$ = BIN$(<integer-expression>) : BIN$() returns the binary representation (e.g. 10101010) of its argument.
+BLOAD BLOAD <filename> TO <variable$> : BLOAD loads the specified file into a string variable.
+BSAVE BSAVE <variable$> TO <filename> : BASAVE saves the content of a string variable into a file.
+BSET( result = BSET(<integer-expression>, <bit-number>) : BSET() returns the value of <integer-expression> with the specified bit set to 1.
+BTST( boolean_result = BTST(<integer-expression, <bit-number>) : BTST() returns TRUE (-1) if the specified bit is set in <integer-expression>, otherwise FALSE (0).
+CALL CALL <subroutine-label>[(parameter [, ...])] : CALL executes the specified subroutine. The parameter list is optional.
+CASE CASE <constant> | IF <expression> | ELSE : CASE introduces a statement block inside a SELECT CASE block.
+CHAIN CHAIN <filename> : CHAIN loads and runs a program. Only variables declared as COMMON remain available to the new program.
+CHDIR CHDIR <path> : CHDIR changes the current directory.
+CHR$( letter$ = CHR$(integer-expression) : CHR$() returns the character associated with a given ASCII code.
+CINT( integer_result = CINT(<num-expression>) : CINT() returns the rounded absolute value of its argument.
+CLEAR CLEAR erases all variables in the current context.
+CLOSE CLOSE [[#]<dev-number][, ...] : CLOSE() closes the file(s) indicated by its arguments or all open files if used without arguments.
+CLS CLS clears the console window.
+COLOR COLOR <foreground-color>[, <background-color>] : COLOR sets the colors for text output into the console window.
+COMMON COMMON <variable> [, ...] : COMMON designates variables to keep their value if commands are used that normally reset variables (such as LOAD).
+COS( cosinus = COS(<rad-expression>) : COS() returns the cosinus of its radian argument (0..2PI).
+CURDIR$ current_dir$ = CURDIR$[()] : CURDIR$() returns the current directory.
+CURDIR$( current_dir$ = CURDIR$[()] : CURDIR$() returns the current directory.
+DATA DATA <constant> [, ...] : DATA lines store numerical or string constants (separated by commas) which can be read with the READ command.
+DATE$ date$ = DATE$[()] : DATE$() returns the current date.
+DATE$( date$ = DATE$[()] : DATE$() returns the current date.
+DEC DEC <variable> : DEC decrements the specified variable by one.
+DEF DEF <NAME>[$][(arg[,...])] = <expression> : DEF creates a user-defined function (a "macro").
+DEG( degree = DEG(<rad-expression>) : DEG() converts a radion value (0...2PI) to a decimal degree (0...360).
+DIM DIM <variable>[(elements [, ...])][, ...] : DIM creates one ore more arrays with the specified number of dimensions and elements (all arrays start at 0).
+DIR$ next_file$ = DIR$[()] : DIR$() returns the next file or directory in the current directory. To restart at the top of the directory, use the CHDIR command.
+DIR$( next_file$ = DIR$[()] : DIR$() returns the next file or directory in the current directory. To restart at the top of the directory, use the CHDIR command.
+DISPATCH DISPATCH <string expression> [TO <variable$>] : DISPATCH sends a string to the active DDE port (Rexx-Port on Amiga computers). The result, if any, is copied to the specified variable.
+DO DO [UNTIL | WHILE <condition>] : DO starts a conditional or unconditional loop (the lines between the DO and LOOP line form the loop body).
+EDIT EDIT invokes the editor to edit the BASIC program in memory.
+ELSE ELSE [IF <condition>] : ELSE introduces the alternative part of an IF block.
+END END [<RETURN-code>], END [FUNCTION | IF | SELECT | SUB] : END terminates program execution AND optionally returns a failure code. END FUNTION, END IF etc. terminate the respective blocks.
+ENVIRON ENVIRON <variable> = <string-expression> : ENVIRON sets the value of the specified environment variable.
+ENVIRON$( value$ = ENVIRON$(<env-variable>) : ENVIRON$() returns the value of the specified environment variable.
+EOF( boolean_result = EOF([#]<device-number) : EOF() checks the end-of-file status of a file and returns either TRUE (-1) or FALSE (0).
+EQV EQV is the binary equivalence operator.
+ERASE ERASE <variable>[()][, ...] : ERASE erases the specified variable(s) in the current scope.
+ERL line = ERL[()] : ERL() returns the number of the line that caused the most recent error.
+ERL( line = ERL[()] : ERL() returns the number of the line that caused the most recent error.
+ERR errorcode = ERR[()] : ERR() returns the number of the most recent error.
+ERR( errorcode = ERR[()] : ERR() returns the number of the most recent error.
+ERROR ERROR <error-number> : ERROR simulates an error.
+EVAL EVAL <string-expression> : EVAL executes the specified string expression as BASIC command.
+EXISTS( boolean_result = EXISTS(<filename>) : EXISTS() checks if the specified file of directory exists and returns either TRUE (-1) or FALSE (0).
+EXIT EXIT [IF <condition>] : EXIT leaves a loop if the specified condition evaluates to any other value than FALSE (0). It leaves unconditionally if no condition is specified.
+EXP( numerical-value = EXP(<num-expression>) : EXP() returns the exponential value of is argument (e to the specified power).
+FALSE FALSE is defined as 0.
+FALSE( FALSE is defined as 0.
+FILECOPY FILECOPY <filename> TO <filename> : FILECOPY copies a file.
+FINDPORT( boolean_result = FINDPORT(<port-name>) : FINDPORT() checks if the specified DDE port (Rexx-Port on Amiga computers) exists and returns either TRUE (-1) or FALSE (0).
+FOR FOR <variable> = <start-value> TO <target-value> [STEP <STEP>] : FOR starts a FOR...NEXT loop.
+FRAC( numerical-value = FRAC(<num-expression>) : FRAC() returns the fractional part of its argument.
+FUNCTION FUNCTION <name>[(<parameter> [, ...])] : FUNCTION starts a user-defined function (FUNCTION...END FUNCTION block).
+GETATTR$( attribute$ = GETATTR$(<filename>) : GETATTR$() returns the attributes of a file or directory (r=readable, w=writeable, e=executable, d=deletable, a=archived, s=script, p=pure).
+GOSUB GOSUB <label> : GOSUB initiates a jump to the line or label specified after GOSUB (the code reached that way must end with RETURN).
+HEX$( hex-string$ = HEX$(num-expression) : HEX$() returns the hexadecimal representation of its argument.
+HOST$ string-value = HOST$() : HOST$() returns the name of the active DDE port (Rexx-Port on Amiga computers) previously selected with ADDRESS.
+HOST$( string-value = HOST$() : HOST$() returns the name of the active DDE port (Rexx-Port on Amiga computers) previously selected with ADDRESS.
+IF IF <condition> [THEN] [<statement> | <label>] : IF starts a conditional IF...THEN...ELSE...END IF block.
+IMP IMP is the binary implication operator.
+INC INC <variable> : INC increments the specified variable by one.
+INPUT INPUT [#<device-number>,] | [<;>][<prompt-string>] <,> | <;> <variable>[, ...] : INPUT reads comma-delimited input from the console window or a file.
+INSTR( position = INSTR(<string-expression>, <pattern>) : INSTR() searches a pattern in a string expression and returns its position or 0 to signal failure.
+INT( integer_result = INT(<num-expression>) : INT() returns the integer value of its argument; see also: CINT().
+KILL KILL <filename> : KILL deletes the specified file.
+LCASE$( lowercase$ = LCASE$(<string-expression>) : LCASE$() returns the lowercase form of its argument.
+LEFT$( left$ = LEFT$(<string-expression> [, <characters>]) : LEFT$() returns the specified number of characters from its argument, beginning at its left side.
+LEN( length = LEN(<string-expression>) : LEN() returns the length of a string expression.
+LET [LET] <variable> = <expression> : LET assigns a value to a variable.
+LINE LINE INPUT [[#]<device-number>,][<prompt string>,] <variable> : LINE INPUT reads an entire line from the console window or a file.
+LIST LIST [<line> [- <line>]] : LIST displays the source code OR a source code segment.
+LOAD LOAD <filename> : LOAD loads the specified BASIC source code.
+LOC( position = LOC([#]<device-number) : LOC() returns the current reading position in a file.
+LOF( size = LOF([#]<device-number) : LOF() returns the total length of a file.
+LOG( log = LOG(<num-expression>) : LOG() returns the natural logarithm of its argument.
+LOOP LOOP [UNTIL <condition>] : LOOP terminates a DO...LOOP loop.
+MAX( maximum = MAX(<num-expression>, <num-expression>) : MAX() returns the maximum of its arguments.
+MERGE MERGE <filename> : MERGE appends a BASIC program to the program in memory. Program execution is not interrupted.
+MID$( middle$ = MID$(<string-expression>, <start-position> [, <characters>]) : MID$() returns a substring of its argument.
+MIN( minimum = MIN(<num-expression>, <num-expression>) : MIN() returns the minimum of its arguments.
+MKDIR MKDIR <dirname> : MKDIR() creates a directory.
+MOD MOD is the numeric modulus operator.
+NAME NAME <filename> AS <filename> : NAME renames a file or directory.
+NEW NEW erases the program in memory. Only variables declared as COMMON retain their value.
+NEXT NEXT [<variable>] : NEXT terminates a FOR...NEXT loop.
+NOT NOT is the binary NOT operator.
+OCT$( octal_string$ = OCT$(num-expression) : OCT$() returns the octal representation of its argument.
+ON ON ERROR GOSUB <label> : ON ERROR installs an error handling subroutine. The code reached that way must end with a RESUME NEXT statement.
+OPEN OPEN "I" | "O" | "A" | "R", [#]<device-number>, <filename>, OPEN <filename> FOR INPUT | OUTPUT | APPEND | RANDOM AS [#]<device-number> : OPEN opens a file FOR reading, writing OR both.
+OR OR is the binary OR operator.
+PI PI is defined as the numerical value of the PI constant.
+PI( PI() is defined as the numerical value of the PI constant.
+POS position = POS[()] : POS() returns the approximate cursor position in the console window (leftmost column is 1).
+POS( position = POS[()] : POS() returns the approximate cursor position in the console window (leftmost column is 1).
+PRINT PRINT [#<device-number>,] <expression> [<,> | <;> ...] : PRINT prints its argument(s) to the console window or to the specified file.
+PROGRAM$ name$ = PROGRAM$[()] : PROGRAM$() returns the name of the program.
+PROGRAM$( name$ = PROGRAM$[()] : PROGRAM$() returns the name of the program.
+QUIT QUIT exits the interpreter and optionally returns a failure code.
+RAD( radian = RAD(<num-expression>) : RAD() converts a decimal degree (0...360) to radian (0...2PI).
+RANDOMIZE RANDOMIZE [<seed>] : RANDOMIZE seeds the pseudo random number generator to get a new sequence of numbers from RND().
+READ READ <variable> [, ...] : READ reads the next numeric or string constant(s) from DATA lines into the specified variable(s).
+REM REM starts a comment.
+REPEAT REPEAT starts a REPEAT ... UNTIL loop.
+RESTORE RESTORE [<label>] : RESTORE forces READ to read constants from the first DATA line in the program.
+RESUME RESUME NEXT terminates a block of statements reached via the ON ERROR GOSUB statement and resumes execution after the calling line.
+RETURN RETURN terminates a block of statements reached via the GOSUB statement and resumes execution after the calling line.
+RIGHT$( right$ = RIGHT$(<string-expression> [, <characters>]) : RIGHT$() returns the specified number of characters from its argument, beginning at its right side.
+RMDIR RMDIR <dirname> : RMDIR deletes an directory (which must be empty). To delete a file, use the KILL command.
+RND random = RND[(<maximum)] : RND() returns a pseudo-random number between 0 (inclusive) and <maximum> (exclusive). It returns a number between 0 and 1 if used without argument.
+RND( random = RND[(<maximum)] : RND() returns a pseudo-random number between 0 (inclusive) and <maximum> (exclusive). It returns a number between 0 and 1 if used without argument.
+RUN RUN [<label>] : RUN starts program execution. If a label is specified, execution begins there.
+SAVE SAVE [<filename>] : SAVE saves the program in memory under its current name or under a specified name.
+SEEK SEEK [#]<device-number>, <position> : SEEK changes the current position in a file. Use LOC() TO READ the current position.
+SELECT SELECT CASE <expression> : SELECT CASE introduces a conditional selection block (SELECT CASE ... END SELECT).
+SETATTR SETATTR <filename>, "[R][W][E][D][P][A][S]" : SETATTR sets the attributes of a file (r=readable, w=writeable, e=executable, d=deletable, a=archived, s=script, p=pure).
+SGN( sign = SGN(<num-expression>) : SGN() returns +1 if its argument is positive, otherwise -1.
+SHARED SHARED <variable> [, ...] : SHARED declares a variable as shared between called code and caller.
+SHELL SHELL <filename> : SHELL executes the specified program.
+SIN( sinus = SIN(<rad-expression>) : SIN() returns the sinus of its radian argument (0..2PI).
+SORT SORT <array-name>() : SORT sorts the specified one-dimensional array (a string array or a numeric array).
+SPACE$( spaces$ = SPACE$(<number-of-spaces>) : SPACE$() creates a string made up by the specified number of spaces.
+SQR( square_root = SQR(<num-expression>) : SQR returns the square root of its argument.
+STEP FOR <variable> = <start-value> TO <target-value> [STEP <step-value>] : STEP specifies the increment of a FOR loop.
+STOP STOP[<return-code>] is a synonym for END and stops program execution. STEP optionally returns a failure code.
+STR$( string$ = STR$(<num-expression>) : STR$() converts a numeric value to a string.
+STRING$( result = STRING$(<length>, <ascii-expression>|<string-expression>) : STRING() creates a string by duplicating the specified ASCII code (or repeat pattern) as often as indicated.
+SUB SUB <name>[(<parameter>, ...)] : SUB is the first line of a subroutine.
+SWAP SWAP <variable>, <variable> : SWAP exchanges the values of two variables.
+TAB( PRINT TAB(<column>) : TAB() creates a control sequence that, when printed, moves the cursor to the specified column by printing spaces.
+TACKON$( newpath$ = TACKON$(<path>, <part>) : TACKON$() appends a part (filename, folder) to a path
+TAN( tangens = TAN(<rad-expression>) : TAN() returns the tangens of its radian argument (0...2PI).
+THEN IF <condition> [THEN] [<statement> | <label>] : IF starts a conditional IF...THEN...ELSE...END IF block.
+TIME$ current_time$ = TIME$[()] : TIME$() returns the current time.
+TIME$( current_time$ = TIME$[()] : TIME$() returns the current time.
+TIMER seconds = TIMER[()] : TIMER() returns the number of seconds elapsed since midnight.
+TIMER( seconds = TIMER[()] : TIMER() returns the number of seconds elapsed since midnight.
+TRIM$( trimmed_result$ = TRIM$(<string-expression>) : TRIM$() returns its argument minus leading and trailing spaces.
+TROFF TROFF turns off output of tracing information.
+TRON  TRON turns on output of tracing information.
+TRUE TRUE is defined as 1.
+TRUE( TRUE is defined as 1.
+UCASE$( uppercase$ = UCASE$(<string-expression>) : UCASE$() returns the uppercase form of its argument.
+UNTIL UNTIL <condition> : UNTIL terminates a REPEAT...UNTIL loop.
+VAL( numeric_value = VAL(<string-expression>) : VAL() returns the numeric value of its string argument.
+WEND WEND terminates a WHILE...WEND loop.
+WHILE WHILE <condition> : WHILE starts a WHILE...WEND loop.
+WRITE WRITE [#<device-number>,] <expression> [, ...] : WRITE prints expressions to the console window or a file. It differs from PRINT in that the values are separated by a comma.
+XOR XOR is the binary XOR operator.
