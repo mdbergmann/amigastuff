@@ -14,13 +14,13 @@
 ; MakeSmallest    = 1
 ; FuncOptimize    = 1
 ; Version         = 0.0.0
-; NumberOfBuilds  = 20
+; NumberOfBuilds  = 109
 ; 
 ; Debugger
 ; -------------------------------------------------------
 ; CliArgs         = ""
 ; StackSize       = 8192
-; RuntimeDebug    = 1
+; RuntimeDebug    = 0
 ; DebugInfo       = 0
 ; CreateDbgFile   = 0
 ; OverflowCheck   = 0
@@ -30,11 +30,11 @@
 ; 
 ; Editor
 ; -------------------------------------------------------
-; CursorLine      = 17
-; CursorColumn    = 1
+; CursorLine      = 30
+; CursorColumn    = 22
 ; LabelSearch     = ""
 ; LabelRemark     = 0
-; LabelAll        = 0
+; LabelAll        = 1
 ; LabelPosition   = 0
 ; 
 ; Blitz Objects
@@ -75,23 +75,94 @@
 ; Max Stencil     = 5
 ; Max XBSound     = 10
 ; /XTRA
-; key press idcmp example program
-NoCli               ;we do not want to have a console window
-Screen 0,4,"MyScreen"
+SYNTAX 0
+
+XINCLUDE "vvblank.include.ab3"
+
+#scrw = 640
+#scrh = 280
+
+DEFTYPE .w
+
+NoCli
+Screen 0, 8, "MyScreen"
+;Screen 0, 0, 0, 640, 280, 3, $8000, "My Screen", 1, 1
 ScreensBitMap 0,0   ;pick up it's bitmap
 DefaultIDCMP $400   ;set 'key press' IDCMP For Window
 
-Window 0,0,0,320,240,$1000 ,"Press a key to exit",O,1
+Window 0,0,0,#scrw,#scrh,$1000 ,"Click mouse to exit",O,1
 
-center_x.w = 320 / 2
-center_y.w = 240 / 2
-radius.w = 10
-Circlef center_x, center_y, radius , 1
+aspect.f = #scrw / #scrh
+center_x = #scrw / 2
+center_y = #scrh / 2
 
-angle = 0
-While Event = O     ;while no event ...
+Function.w aspectRadius{radius}
+  SHARED aspect
+  Function Return aspect * radius
+End Function
 
-Wend
+Dim sin_as.f(360)
+Dim cos_as.f(360)
+Statement calcLoopupTable{}
+  SHARED sin_as(), cos_as()
+  For i = 0 To 360
+    rad.f = (i * Pi) / 180.0
+    sin_as(i) = Sin(rad)
+    cos_as(i) = Cos(rad)
+  Next
+End Statement
+
+Statement drawCircleMain{radius, col}
+  SHARED center_x, center_y
+  radius_x = aspectRadius{radius}
+  radius_y = radius
+  Circlef center_x, center_y, radius_x, radius_y, col
+End Statement
+
+Statement drawCircleObj{x.w, y.w, radius.w, angle.w, objRadius.b, objCol.b}
+  SHARED sin_as()
+  SHARED cos_as()
+  SHARED aspect
+  cos_a.f = cos_as(angle)
+  sin_a.f = sin_as(angle)
+  x_a = x + cos_a * radius * aspect
+  y_a = y + sin_a * radius
+  ;NPrint "x_a, y_a: ",x_a,", ",y_a
+  ;NPrint "y_a, y_aspect: ",y_a,",",y_aspect
+  objRadius_x = aspectRadius{objRadius}
+  objRadius_y = objRadius
+  If objRadius = 0
+    Plot x_a, y_a, objCol
+  Else
+    Circlef x_a, y_a, objRadius_x, objRadius_y, objCol
+  EndIf
+End Statement
+
+mainCircleRadius = 5
+
+firstCircleCycle = 50
+firstCircleRadius = 2
+
+calcLoopupTable{}
+drawCircleMain{mainCircleRadius, 1}
+
+NPrint "START: ",Hours,":",Mins,":",Secs
+
+angle.w = 0
+For i = 0 To 0
+  angle = 0
+  While angle < 360
+    drawCircleObj{center_x, center_y, firstCircleCycle, angle, firstCircleRadius, 0}
+    drawCircleObj{center_x, center_y, firstCircleCycle, angle + 1, firstCircleRadius, 1}
+
+    vvblank_Wait{1}
+
+    angle = angle + 1
+  Wend
+Next
+NPrint "END: ",Hours,":",Mins,":",Secs
+
+MouseWait
 
 End
 

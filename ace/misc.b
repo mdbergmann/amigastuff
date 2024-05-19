@@ -74,11 +74,11 @@ SUB moving_circle
     draw_step = 1
     LET angle% = 0
     PRINT "START: ";TIME$
-    FOR i=0 TO 1
+    FOR i=0 TO 0
     angle%=0
     WHILE angle%<360  ' ctrl-c in place
-        draw_circle_obj(p_x, p_y, 50, angle%, angle%, draw_step, 0, 1, 0)
-        draw_circle_obj(p_x, p_y, 50, angle%+draw_step, angle%+draw_step, draw_step, 0, 1, 1)
+        draw_circle_obj(p_x, p_y, 50, angle%, angle%, draw_step, 5, 1, 0)
+        draw_circle_obj(p_x, p_y, 50, angle%+draw_step, angle%+draw_step, draw_step, 5, 1, 1)
         SLEEP FOR 0.02
         angle% = angle% + draw_step
         'IF angle% = 360 THEN angle% = 0
