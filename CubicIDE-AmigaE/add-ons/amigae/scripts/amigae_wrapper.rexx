@@ -24,7 +24,7 @@ signal on break_c
 options results
 
 /* Specify your compiler and build tool */
-EC = 'EC'
+EC = 'EVO'
 BUILD = 'Build'
 
 /* check arguments */

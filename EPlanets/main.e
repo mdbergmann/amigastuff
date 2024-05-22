@@ -7,9 +7,11 @@ MODULE 'intuition/screens',
         'graphics/gfxbase',
         'graphics/rastport',
         'graphics/gfxmacros',
+        'graphics/gfx',
+        'exec/memory',
         'dos/dos'
 
-CONST SCRW=320,SCRH=240
+CONST SCRW=640,SCRH=480
 
 DEF center_x, center_y
 DEF screen, win:PTR TO window
@@ -27,12 +29,14 @@ PROC drawCircle(x, y, radius, col, fill)
     DEF stat
     SetAPen(stdrast, col)
     IF fill
-        DrawEllipse(win.rport, x, y, radius, radius)
-        SetOPen(stdrast, col)
-        stat:=Flood(stdrast, 0, x, y)
-        PrintF('Flood stat: \d\n', stat)
+        AreaEllipse(stdrast, x, y, radius, radius)
+        AreaEnd(stdrast)
+        ->DrawEllipse(stdrast, x, y, radius, radius)
+        ->SetOPen(stdrast, col)
+        ->stat:=Flood(stdrast, 0, x, y)
+        ->PrintF('Flood stat: \d\n', stat)
     ELSE
-        DrawEllipse(win.rport, x, y, radius, radius)
+        DrawEllipse(stdrast, x, y, radius, radius)
     ENDIF
 ENDPROC
 
@@ -56,31 +60,33 @@ PROC logTime(label)
     PrintF('\s - Min:\d Ticks:\d\n', label, ds.minute, ds.tick)
 ENDPROC
 
-CONST AREASIZE=200
+CONST AREASIZE=360
 
 PROC main()
     DEF i, angle, angleStep, drawCol, voidCol, baseRadius
     DEF area:PTR TO areainfo
     DEF tras:PTR TO tmpras
-    DEF areabuf[AREASIZE]:ARRAY
-    DEF planePtr
+    DEF areabuf
+    DEF tmpbuf
+    DEF rassize
 
     center_x := SCRW/2
     center_y := SCRH/2
 
-    IF screen:=OpenS(SCRW,SCRH,4,0,'My Screen')
-        IF win:=OpenW(0,0,SCRW-1,SCRH-1,$200,$F,'My Window',screen,15,NIL)
-            PrintF('Allocating raster...\n')
-            planePtr := AllocRaster(SCRW, SCRH)
-            PrintF('Init Area...\n')
-            InitArea(area, areabuf, (AREASIZE*2)/5)
-            win.rport.areainfo := area
+    ->IF screen:=OpenS(SCRW,SCRH,4,0,'My Screen')
+        IF win:=OpenW(0,0,SCRW-1,SCRH-1,$200,$F,'My Window',NIL,1,NIL)
             PrintF('Init TmpRas...\n')
-            InitTmpRas(tras, planePtr, SCRW*SCRH)
+            rassize := RASSIZE(win.gzzwidth, win.gzzheight)
+            tmpbuf := NewM(rassize, MEMF_CHIP)
+            InitTmpRas(tras, tmpbuf, SCRW*SCRH)
             win.rport.tmpras := tras
-            SetDrMd(stdrast, 0)
 
-            PrintF('Bitmap PTR: \d\n', win.rport.bitmap)
+            PrintF('Init Area...\n')
+            areabuf := NewM(5*AREASIZE, MEMF_CHIP)
+            InitArea(area, areabuf, AREASIZE)
+            win.rport.areainfo := area
+
+            SetDrMd(stdrast, 0)
 
             PrintF('Drawing Elippse...\n')
             drawCircle(center_x, center_y, 10, 1, TRUE)
@@ -95,20 +101,19 @@ PROC main()
 
             FOR i:=0 TO 0
                 FOR angle:=0 TO 359
-                    drawEllipseObj(center_x, center_y, baseRadius, angle,   angle,   angleStep, 0, voidCol, TRUE)
-                    drawEllipseObj(center_x, center_y, baseRadius, angle+1, angle+1, angleStep, 0, drawCol, TRUE)
-                    Delay(1) -> ticks
+                    drawEllipseObj(center_x, center_y, baseRadius, angle,   angle,   angleStep, 5, voidCol, TRUE)
+                    drawEllipseObj(center_x, center_y, baseRadius, angle+1, angle+1, angleStep, 5, drawCol, TRUE)
+                    ->Delay(1) -> ticks
                 ENDFOR
             ENDFOR
 
             logTime('END')
 
             WHILE Mouse()<>1 DO NOP
-            FreeRaster(planePtr, SCRW, SCRH)
             PrintF('Closing...\n')
             CloseW(win)
         ENDIF
-    CloseS(screen)
-    ENDIF
+    ->CloseS(screen)
+    ->ENDIF
     CleanUp(0)
 ENDPROC

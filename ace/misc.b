@@ -2,8 +2,8 @@ PRINT "Press CTRL-c close windows..."
 ON BREAK GOTO quit
 BREAK ON
 
-CONST w_width = 320
-CONST w_height = 240
+CONST w_width = 640
+CONST w_height = 480
 
 SUB lines(n)
     FOR i=1 TO n
@@ -88,7 +88,7 @@ SUB moving_circle
     ' 24 secs
 END SUB
 
-SCREEN 1,320,240,4,1
+'SCREEN 1,320,240,4,1
 
 {
 WINDOW 1,"Lines",(0,0)-(w_width,w_height),,1
@@ -102,9 +102,9 @@ areas()
 WINDOW 3,"Points",(0,0)-(w_width,w_height),,1
 PRINT "Drawing points"
 'points()
-
-WINDOW 4,"CIRCLE",(0,0)-(w_width,w_height),,1
 }
+
+WINDOW 4,"CIRCLE",(0,0)-(w_width,w_height)
 PRINT "Drawing circle"
 moving_circle()
 
@@ -117,8 +117,8 @@ quit:
     'WINDOW CLOSE 1
     'WINDOW CLOSE 2
     'WINDOW CLOSE 3
-    'WINDOW CLOSE 4
-    SCREEN CLOSE 1
+    WINDOW CLOSE 4
+    'SCREEN CLOSE 1
     PRINT "Ending..."
 
 END
