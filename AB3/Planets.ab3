@@ -3,59 +3,59 @@
 ; 
 ; General Info
 ; -------------------------------------------------------
-; ExePath         = "ram:"
-; ExeFile         = "Empty"
+; ExePath         = "RAM:"
+; ExeFile         = "Prog.exe"
 ; CreateIcon      = 0
-; Residents       = "all.res"
+; Residents       = ""
 ; 
 ; Compiler
 ; -------------------------------------------------------
-; StringBuffer    = 100000
-; MakeSmallest    = 1
+; StringBuffer    = 10240
+; MakeSmallest    = 0
 ; FuncOptimize    = 1
 ; Version         = 0.0.0
-; NumberOfBuilds  = 133
+; NumberOfBuilds  = 6
 ; 
 ; Debugger
 ; -------------------------------------------------------
 ; CliArgs         = ""
-; StackSize       = 8192
+; StackSize       = 32768
 ; RuntimeDebug    = 0
 ; DebugInfo       = 0
 ; CreateDbgFile   = 0
 ; OverflowCheck   = 0
-; AssemblerCheck  = 0
+; AssemblerCheck  = 1
 ; InterruptCheck  = 1
 ; AutoRun         = 1
 ; 
 ; Editor
 ; -------------------------------------------------------
-; CursorLine      = 68
-; CursorColumn    = 7
-; LabelSearch     = "screen_open"
+; CursorLine      = 112
+; CursorColumn    = 27
+; LabelSearch     = ""
 ; LabelRemark     = 0
-; LabelAll        = 1
+; LabelAll        = 0
 ; LabelPosition   = 0
 ; 
 ; Blitz Objects
 ; -------------------------------------------------------
-; Max File        = 100
-; Max GadgetList  = 100
-; Max Shape       = 200
-; Max Bank        = 1
-; Max MenuList    = 100
-; Max GTList      = 100
+; Max File        = 5
+; Max GadgetList  = 5
+; Max Shape       = 100
+; Max Bank        = 5
+; Max MenuList    = 5
+; Max GTList      = 20
 ; Max Palette     = 4
 ; Max BitMap      = 10
 ; Max Screen      = 5
-; Max IntuiFont   = 10
-; Max BlitzFont   = 1
-; Max Window      = 100
+; Max IntuiFont   = 5
+; Max BlitzFont   = 4
+; Max Window      = 20
 ; Max IconInfo    = 1
 ; Max MUIObject   = 50
 ; Max AsyncReq    = 4
 ; Max Req-Lib     = 5
-; Max GTMenuList  = 100
+; Max GTMenuList  = 5
 ; Max Console     = 5
 ; Max TCPSock     = 5
 ; Max Tape        = 5
@@ -75,6 +75,8 @@
 ; Max Stencil     = 5
 ; Max XBSound     = 10
 ; /XTRA
+SYNTAX 0
+OPTIMIZE 5
 
 ;XINCLUDE "vvblank.include.ab3"
 ;XINCLUDE "screen.include.ab3"
@@ -87,38 +89,43 @@ DEFTYPE .w
 ;Screen 0, 0, 0, 640, 280, 3, $8000, "My Screen", 1, 1
 ;WbToScreen 0
 NPrint "Init Screen..."
-NInitScreen 1
+;NInitScreen 1
 ;NScreen 0, 640, 480, 16, stags
 ;ScreensBitMap 0,0   ;pick up it's bitmap
 ;DefaultIDCMP $400   ;set 'key press' IDCMP For Window
 
 NPrint "WbToScreen..."
-NWbToScreen 0
+;WbToScreen 0
 
-scr_w = NScreenWidth  ;screen_GetWidth{}
-scr_h = NScreenHeight  ;screen_GetHeight{} - 20
+;*myscreen.Screen = Screen(0, 0, 0, 640, 480, 24, $8000 | 4, "Test", 1, 2)
+
+;scr_w = NScreenWidth  ;screen_GetWidth{}
+;scr_h = NScreenHeight  ;screen_GetHeight{} - 20
+
+scr_w.w = 640
+scr_h.w = 480
 
 NPrint "w_w, w_h: ", scr_w, ",", scr_h
 
-win_w = 640
-win_h = 480
+win_w.w = 640
+win_h.w = 480
 
 ;Window 0,0,20,scr_w,scr_h,$1000 ,"Click mouse to exit",O,1
-NInitWindow 1
-NInitTagList 2
-NResetTagList #WA_IDCMP, #IDCMP_CLOSEWINDOW | #IDCMP_MENUPICK | #IDCMP_GADGETUP
-NAddTag #WA_Flags, #WFLG_CLOSEGADGET
-NWindow 0, 0, 0, win_w, win_h - 20, NTagListID
+;NInitWindow 1
+;NInitTagList 2
+;NResetTagList #WA_IDCMP, #IDCMP_CLOSEWINDOW | #IDCMP_MENUPICK | #IDCMP_GADGETUP
+;NAddTag #WA_Flags, #WFLG_CLOSEGADGET
+;NWindow 0, 0, 0, win_w, win_h - 20, NTagListID
 
-NPrint "Window rastport = ",NWindowRastPort
+;NPrint "Window rastport = ",NWindowRastPort
 
-NDrawingOutput NWindowRastPort
+;NDrawingOutput NWindowRastPort
 
 aspect.f = scr_w / scr_h
-center_x = win_w / 2
-center_y = win_h / 2
+center_x.w = win_w / 2
+center_y.w = win_h / 2
 
-Function.w aspectRadius{radius}
+Function .w aspectRadius{radius}
   SHARED aspect
   Function Return aspect * radius
 End Function
@@ -129,8 +136,8 @@ Statement calcLoopupTable{}
   SHARED sin_as(), cos_as()
   For i = 0 To 360
     rad.f = (i * Pi) / 180.0
-    sin_as(i) = Sin(rad)
-    cos_as(i) = Cos(rad)
+    sin_as(i) = Cos(rad)
+    cos_as(i) = Sin(rad)
   Next
 End Statement
 
@@ -140,9 +147,10 @@ Statement drawCircleMain{radius, col}
   radius_y = radius
   ;Circlef center_x, center_y, radius_x, radius_y, col
   ;WCircle center_x, center_y, radius_x, col
-  NFrontColour col
-  rp.l = NWindowRastPort
-  AreaEllipse_ rp, center_x, center_y, radius_x, radius_y
+  ;NFrontColour col
+  ;rp.l = NWindowRastPort
+  ;AreaEllipse_ rp, center_x, center_y, radius_x, radius_y
+  ;AreaEnd_ rp
   ;NEllipse center_x, center_y, radius_x, radius_y
 End Statement
 
@@ -158,16 +166,16 @@ Statement drawCircleObj{x.w, y.w, radius.w, angle.w, objRadius.b, objCol.b}
   ;NPrint "y_a, y_aspect: ",y_a,",",y_aspect
   objRadius_x = objRadius ; aspectRadius{objRadius}
   objRadius_y = objRadius
-  NFrontColour objCol
+  ;NFrontColour objCol
   If objRadius = 0
     ;Plot x_a, y_a, objCol
     ;WPlot x_a, y_a, objCol
-    NPlot x_a, y_a
+    ;NPlot x_a, y_a
   Else
     ;Circlef x_a, y_a, objRadius_x, objRadius_y, objCol
     ;WCircle x_a, y_a, objRadius_y, objCol
-    NEllipse x_a, y_a, objRadius_x, objRadius_y
-  EndIf
+    ;NEllipse x_a, y_a, objRadius_x, objRadius_y
+  End If
 End Statement
 
 mainCircleRadius = 5
@@ -175,29 +183,55 @@ mainCircleRadius = 5
 firstCircleCycle = 50
 firstCircleRadius = 2
 
-calcLoopupTable{}
-drawCircleMain{mainCircleRadius, 1}
+areasize.w = 200
+Dim areabuffer.w(areasize)
 
-NPrint "START: ", Hours, ":", Mins, ":", Secs
+DEFTYPE .AreaInfo areainfo
+DEFTYPE .TmpRas tmpras
+
+InitArea_ & areainfo, & areabuffer(0), (areasize * 2) / 5
+
+tmparea.l = AllocMem(areasize * 2, #MEMF_CHIP)
+If tmparea = 0
+  NPrint "Unable to allocate RAM!"
+  End
+End If
+
+InitTmpRas_ tmpras, tmparea, areasize * 2
+
+*myrp.RastPort = *myscreen\RastPort
+*myrp\AreaInfo = &areainfo
+*myrp\FgPen = 4
+
+AreaEllipse_ * myrp, center_x, center_y, 50, 50
+AreaEnd_ * myrp
+
+;calcLoopupTable{}
+;drawCircleMain{mainCircleRadius, 1}
+
+Print "START: ", Hours , ":", Secs, ":", Secs
 
 angle.w = 0
 For i = 0 To 0
   angle = 0
   While angle < 360
-    drawCircleObj{center_x, center_y, firstCircleCycle, angle, firstCircleRadius, 0}
-    drawCircleObj{center_x, center_y, firstCircleCycle, angle + 1, firstCircleRadius, 1}
+    ;drawCircleObj{center_x, center_y, firstCircleCycle, angle, firstCircleRadius, 0}
+    ;drawCircleObj{center_x, center_y, firstCircleCycle, angle + 1, firstCircleRadius, 1}
 
-    VWait 1
+    ;VWait 1
     ;vvblank_Wait{1}
 
     angle = angle + 1
   Wend
 Next
-NPrint "END: ",Hours,":",Mins,":",Secs
+NPrint "END: ",Hours ,":",Mins,":", Secs
 
-Repeat
-  IDCMP.l = NWaitWindowEvent
-Until IDCMP = #IDCMP_CLOSEWINDOW
+MouseWait
+
+
+;Repeat
+;  IDCMP.l = NWaitWindowEvent
+;Until IDCMP = #IDCMP_CLOSEWINDOW
 
 End
 

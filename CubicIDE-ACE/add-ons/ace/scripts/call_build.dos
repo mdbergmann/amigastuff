@@ -1,5 +1,0 @@
-.KEY folder/A,target/A
-
-cd <folder>
-build <target>
-

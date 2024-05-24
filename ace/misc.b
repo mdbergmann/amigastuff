@@ -90,6 +90,35 @@ END SUB
 
 'SCREEN 1,320,240,4,1
 
+#include <graphics/clip.h>
+#include <graphics/rastport.h>
+
+LIBRARY "graphics.library"
+
+DECLARE FUNCTION InitArea( STRUCTPTR areaInfo, APTR vectorBuffer, LONGINT maxVectors ) LIBRARY graphics
+DECLARE FUNCTION STRUCTPTR InitTmpRas( STRUCTPTR tmpRas, ADDRESS buffer, LONGINT _SIZE ) LIBRARY graphics
+DECLARE FUNCTION DrawEllipse( STRUCTPTR rp, LONGINT xCenter, LONGINT yCenter, LONGINT a, \
+                                      LONGINT b ) LIBRARY graphics
+DECLARE FUNCTION LONGINT AreaEllipse( STRUCTPTR rp, LONGINT xCenter, LONGINT yCenter, LONGINT a, \
+                                      LONGINT b ) LIBRARY graphics
+DECLARE FUNCTION LONGINT AreaEnd( STRUCTPTR rp ) LIBRARY graphics
+
+CONST areasize = 200
+DIM areabuffer%(areasize)
+
+DECLARE STRUCT AreaInfo areainfo
+DECLARE STRUCT TmpRas tmpras
+
+InitArea(@areainfo, @areabuffer%, (areasize*2 / 5))
+
+tmparea& = ALLOC(areasize*2, 3)
+IF tmparea = 0& THEN
+    PRINT "Unable to allocate memory!"
+    STOP
+END IF
+
+InitTmpRas(@tmpras, tmparea, areasize*2)
+
 {
 WINDOW 1,"Lines",(0,0)-(w_width,w_height),,1
 PRINT "drawing lines"
@@ -106,7 +135,16 @@ PRINT "Drawing points"
 
 WINDOW 4,"CIRCLE",(0,0)-(w_width,w_height)
 PRINT "Drawing circle"
-moving_circle()
+
+DECLARE STRUCT RastPort *scrRp
+scrRp = WINDOW(8)
+scrRp->AreaInfo = @areainfo
+scrRp->FgPen = 1
+DrawEllipse(scrRp, 120, 120, 30, 30)  'OK
+AreaEllipse(scrRp, 100, 100, 50, 50)
+AreaEnd(scrRp)
+
+'moving_circle()
 
 'wait for ctrl-c
 WHILE -1
@@ -119,6 +157,9 @@ quit:
     'WINDOW CLOSE 3
     WINDOW CLOSE 4
     'SCREEN CLOSE 1
+
+    LIBRARY CLOSE "graphics.library"
+
     PRINT "Ending..."
 
 END

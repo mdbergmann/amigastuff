@@ -23,6 +23,8 @@ signal on break_c
 options results
 
 /* Specify your compiler and build tool */
+APP = 'ACPP' /* 'APP' */
+RL = 'RemoveLine'
 ACE = 'ACE'
 AS = 'a68k'
 LNK = 'blink'
@@ -69,32 +71,33 @@ say 'Assembly name: 'assembly_name
 outputname = assembly_name
 say 'Output name: 'outputname
 
+err = 0
 /* Now compile and or run */
 if mode = 'compile' | mode = 'compile_run' then do
+    say 'Preprocessing...'
+    pre_outname = outputname'.pre'
+    ADDRESS COMMAND APP input pre_outname
+    call assertNoError('pre-processing')
+    say 'Preprocessing...done'
+    say 'pre-processing stage 2...'
+    pre2_outname = outputname'.pre2'
+    ADDRESS COMMAND RL pre_outname pre2_outname'.b'
+    call assertNoError('pre-processing2')
+    say 'pre-processing stage 2...done'
     say 'Compiling...'
-    ADDRESS COMMAND ACE input
+    ADDRESS COMMAND ACE pre2_outname
     say 'Compiling...done'
-    if RC > 0 then do
-        say 'Error on compile!'
-        exit
-    end
+    call assertNoError('compile')
 
     if mode = 'compile_run' then do
         say 'Assembling...'
         ADDRESS COMMAND AS outputname'.s'
         say 'Assembling...done'
-        if RC > 0 then do
-            say 'Error on assemble!'
-            exit
-        end
-
+        call assertNoError('assemble')
         say 'Linking...'
         ADDRESS COMMAND LNK FROM outputname'.o' 'LIB ace:lib/db.lib ace:lib/ami.lib ace:lib/startup.lib TO 'outputname
         say 'Linking...done'
-        if RC > 0 then do
-            say 'Error on linking!'
-            exit
-        end
+        call assertNoError('linking')
     end
 end
 else if mode = 'run' then do
@@ -102,6 +105,8 @@ else if mode = 'run' then do
 end
 else if mode = 'clean' then do
     say 'Deleting generated files...'
+    ADDRESS COMMAND Delete outputname'.pre'
+    ADDRESS COMMAND Delete outputname'.pre2.b'
     ADDRESS COMMAND Delete outputname'.s'
     ADDRESS COMMAND Delete outputname'.o'
     ADDRESS COMMAND Delete outputname
@@ -131,6 +136,13 @@ extractParentFolder: procedure
         parentPath = substr(path, 1, p-1)
     else
         parentPath = ''
-
     return parentPath
+
+assertNoError: procedure expose RC
+    parse arg label
+    say 'RC: 'RC
+    if RC > 0 then do
+        say 'Error on 'label'!'
+        exit
+    end
 
