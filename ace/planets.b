@@ -4,10 +4,12 @@ BREAK ON
 
 #include <graphics/clip.h>
 #include <graphics/rastport.h>
+#include <graphics/gfx.h>
 
 LIBRARY "graphics.library"
 
 DECLARE FUNCTION InitArea( STRUCTPTR areaInfo, APTR vectorBuffer, LONGINT maxVectors ) LIBRARY graphics
+DECLARE FUNCTION InitTmpRas( STRUCTPTR tmpRas, ADDRESS buffer, LONGINT _SIZE ) LIBRARY graphics
 DECLARE FUNCTION DrawEllipse( STRUCTPTR rp, LONGINT xCenter, LONGINT yCenter, LONGINT a, \
                                       LONGINT b ) LIBRARY graphics
 DECLARE FUNCTION LONGINT AreaEllipse( STRUCTPTR rp, LONGINT xCenter, LONGINT yCenter, LONGINT a, \
@@ -17,37 +19,6 @@ DECLARE FUNCTION SetAPen( STRUCTPTR rp, LONGINT pen ) LIBRARY graphics
 
 CONST w_width = 640
 CONST w_height = 480
-
-SUB lines(n)
-    FOR i=1 TO n
-        COLOR i MOD 255
-        LINE (RND*w_width, RND*w_height) - (RND*w_width, RND*w_height)
-    NEXT
-END SUB
-
-SUB areas
-    a = 10 : b = 10 : c = 100 : d = 100
-
-    LINE(a,b)-(c,b)
-    LINE(c,b)-(c,d)
-    LINE(c,d)-(a,d)
-    LINE(a,d)-(a,b)
-
-    AREA (10,150)
-    AREA STEP (0, 100)
-    AREA STEP (100, 0)
-    AREA STEP (0, -100)
-    AREAFILL
-END SUB
-
-SUB points
-    FOR x=1 TO w_width-1
-        FOR y=1 TO w_height-1
-            COLOR RND*256
-            PSET (x,y)
-        NEXT
-    NEXT
-END SUB
 
 SUB draw_circle(rp, x, y, radius, col, fill)
     IF fill THEN
@@ -106,46 +77,39 @@ END SUB
 
 'SCREEN 1,320,240,4,1
 
-CONST areasize = 200
-DIM SHORTINT areabuffer(areasize)
+CONST maxvectors = 200
+CONST areaBufSize = maxvectors * 5
+DIM areabuffer(areaBufSize)
 
 DECLARE STRUCT AreaInfo areainfo
 DECLARE STRUCT TmpRas tmpras
+DECLARE STRUCT RastPort *scrRp
 
-InitArea(@areainfo, @areabuffer, (areasize*2 / 5))
+WINDOW 1,"Planets",(0,0)-(w_width,w_height)
+scrRp = WINDOW(8)
 
-tmparea& = ALLOC(areasize*2, 3)
-IF tmparea = 0& THEN
-    PRINT "Unable to allocate memory!"
+InitArea(@areainfo, @areabuffer(0), maxvectors)
+scrRp->AreaInfo = @areainfo
+
+tmprasBufSize% = w_width * w_height
+tmprasBuffer& = ALLOC(tmprasBufSize, 3)
+IF tmprasBuffer = 0 THEN
+    PRINT "Unable to allocate memory for TmpRas!"
     STOP
 END IF
+rassize = 38400 ' w_height& * (SHR(w_width&+15, 3) AND &HFFFE)
+PRINT "RASSIZE: ";rassize
+InitTmpRas(@tmpras, tmprasBuffer, rassize)
+scrRp->TmpRas = @tmpras
 
-{
-WINDOW 1,"Lines",(0,0)-(w_width,w_height),,1
-PRINT "drawing lines"
-lines(500)
+SetAPen(scrRp, 1)
+stat = AreaEllipse(scrRp, 120, 120, 10, 10)
+PRINT "AreaEllipse result: ";stat
+stat = AreaEnd(scrRp)
+PRINT "AreaEnd result: ";stat
+DrawEllipse(scrRp, 120, 120, 30, 30)  'OK
 
-WINDOW 2,"Areas",(0,0)-(w_width,w_height),,1
-PRINT "Drawing areas"
-areas()
-
-WINDOW 3,"Points",(0,0)-(w_width,w_height),,1
-PRINT "Drawing points"
-'points()
-}
-
-WINDOW 4,"CIRCLE",(0,0)-(w_width,w_height)
-PRINT "Drawing circle"
-
-DECLARE STRUCT RastPort *scrRp
-scrRp = WINDOW(8)
-scrRp->AreaInfo = @areainfo
-'scrRp->FgPen = 1
-'AreaEllipse(scrRp, 120, 120, 10, 10)
-'AreaEnd(scrRp)
-'DrawEllipse(scrRp, 120, 120, 30, 30)  'OK
-
-moving_circle(srcRp)
+'moving_circle(srcRp)
 
 'wait for ctrl-c
 WHILE -1
@@ -153,15 +117,11 @@ WHILE -1
 WEND
 
 quit:
-    'WINDOW CLOSE 1
-    'WINDOW CLOSE 2
-    'WINDOW CLOSE 3
-    WINDOW CLOSE 4
+    WINDOW CLOSE 1
     'SCREEN CLOSE 1
 
     LIBRARY CLOSE "graphics.library"
 
     PRINT "Ending..."
-
 END
 

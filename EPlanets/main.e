@@ -77,17 +77,21 @@ PROC main()
             FOR i:=0 TO areasize DO areabuf[i] := 0
 
             PrintF('Init Area...\n')
-            InitArea(area, areabuf, (areasize*2)/5)
+            InitArea(area, {areabuf[0]}, (areasize*2)/5)
             win.rport.areainfo := area
+            PrintF('Init Area...done\n')
             PrintF('Init TmpRas...\n')
-            tmpbuf := NewM(areasize*2, MEMF_CHIP)
+            tmpbuf := AllocMem(areasize*2, MEMF_CHIP)
+            PrintF('tmpbuf allocated\n')
             InitTmpRas(tras, tmpbuf, areasize*2)
+            PrintF('InitTmpRas ok\n')
             win.rport.tmpras := tras
+            PrintF('Init TmpRas...done\n')
 
-            SetDrMd(stdrast, 0)
+            ->SetDrMd(stdrast, 0)
 
-            PrintF('Drawing Elippse...\n')
-            drawCircle(center_x, center_y, 10, 1, TRUE)
+            PrintF('Drawing Ellipse...\n')
+            drawCircle(center_x, center_y, 10, 1, FALSE)
             PrintF('Drawing Ellipse...done\n')
 
             angleStep := 1
@@ -109,6 +113,7 @@ PROC main()
 
             WHILE Mouse()<>1 DO NOP
             PrintF('Closing...\n')
+            FreeMem(tmpbuf, areasize*2)
             CloseW(win)
         ENDIF
     ->CloseS(screen)

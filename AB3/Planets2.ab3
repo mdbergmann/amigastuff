@@ -1,0 +1,211 @@
+; XTRA
+; Embedded .xtra Header
+; 
+; General Info
+; -------------------------------------------------------
+; ExePath         = "ram:"
+; ExeFile         = "Empty"
+; CreateIcon      = 0
+; Residents       = "all.res"
+; 
+; Compiler
+; -------------------------------------------------------
+; StringBuffer    = 100000
+; MakeSmallest    = 1
+; FuncOptimize    = 1
+; Version         = 0.0.0
+; NumberOfBuilds  = 29
+; 
+; Debugger
+; -------------------------------------------------------
+; CliArgs         = ""
+; StackSize       = 8192
+; RuntimeDebug    = 0
+; DebugInfo       = 0
+; CreateDbgFile   = 0
+; OverflowCheck   = 0
+; AssemblerCheck  = 0
+; InterruptCheck  = 1
+; AutoRun         = 1
+; 
+; Editor
+; -------------------------------------------------------
+; CursorLine      = 100
+; CursorColumn    = 67
+; LabelSearch     = ""
+; LabelRemark     = 0
+; LabelAll        = 0
+; LabelPosition   = 0
+; 
+; Blitz Objects
+; -------------------------------------------------------
+; Max File        = 100
+; Max GadgetList  = 100
+; Max Shape       = 200
+; Max Bank        = 1
+; Max MenuList    = 100
+; Max GTList      = 100
+; Max Palette     = 4
+; Max BitMap      = 10
+; Max Screen      = 5
+; Max IntuiFont   = 10
+; Max BlitzFont   = 1
+; Max Window      = 100
+; Max IconInfo    = 1
+; Max MUIObject   = 50
+; Max AsyncReq    = 4
+; Max Req-Lib     = 5
+; Max GTMenuList  = 100
+; Max Console     = 5
+; Max TCPSock     = 5
+; Max Tape        = 5
+; Max Sound       = 10
+; Max MedModule   = 8
+; Max Buffer      = 10
+; Max Queue       = 10
+; Max Sprite      = 20
+; Max Module      = 5
+; Max Slice       = 10
+; Max Page        = 4
+; Max CopList     = 10
+; Max PTModule    = 5
+; Max Anim        = 10
+; Max NChunky     = 50
+; Max Chunky      = 20
+; Max Stencil     = 5
+; Max XBSound     = 10
+; /XTRA
+
+SYNTAX 0
+OPTIMIZE 5
+
+;XINCLUDE "vvblank.include.ab3"
+;XINCLUDE "screen.include.ab3"
+
+DEFTYPE .w
+
+;NoCli
+;screen_Open{"My Screen", 0, 640, 480, 16, 0} ;, #scr_mode_ask}
+;Screen 0, 8, "MyScreen"
+;Screen 0, 0, 0, 640, 280, 3, $8000, "My Screen", 1, 1
+;WbToScreen 0
+NPrint "Init Screen..."
+;NInitScreen 1
+;NScreen 0, 640, 480, 16, stags
+;ScreensBitMap 0,0   ;pick up it's bitmap
+;DefaultIDCMP $400   ;set 'key press' IDCMP For Window
+
+NPrint "WbToScreen..."
+;WbToScreen 0
+
+scr_w.w = 640
+scr_h.w = 480
+*myscreen.Screen = Screen(0, 0, 0, scr_w, scr_h, 24, $8000 | 4, "Test", 1, 2)
+
+NPrint "w_w, w_h: ", scr_w, ",", scr_h
+
+aspect.f = scr_w / scr_h
+center_x.w = src_w / 2
+center_y.w = src_h / 2
+
+Function .w aspectRadius{radius.w}
+  SHARED aspect
+  Function Return aspect * radius
+End Function
+
+Dim sin_as.f(360)
+Dim cos_as.f(360)
+Statement calcLoopupTable{}
+  SHARED sin_as(), cos_as()
+  For i = 0 To 360
+    rad.f = (i * Pi) / 180.0
+    sin_as(i) = Cos(rad)
+    cos_as(i) = Sin(rad)
+  Next
+End Statement
+
+Statement drawCircleMain{ * rp.RastPort, radius.w, col.w}
+  SHARED center_x, center_y
+  radius_x = radius ;aspectRadius{radius}
+  radius_y = radius
+  * rp\FgPen = col
+  AreaEllipse_ * rp, center_x, center_y, radius_x, radius_y
+  AreaEnd_ * rp
+End Statement
+
+Statement drawCircleObj{x.w, y.w, radius.w, angle.w, objRadius.b, objCol.b}
+  SHARED sin_as()
+  SHARED cos_as()
+  SHARED aspect
+  cos_a.f = cos_as(angle)
+  sin_a.f = sin_as(angle)
+  x_a = x + cos_a * radius * aspect
+  y_a = y + sin_a * radius
+  ;NPrint "x_a, y_a: ",x_a,", ",y_a
+  ;NPrint "y_a, y_aspect: ",y_a,",",y_aspect
+  objRadius_x = objRadius ; aspectRadius{objRadius}
+  objRadius_y = objRadius
+  ;NFrontColour objCol
+  If objRadius = 0
+    ;Plot x_a, y_a, objCol
+    ;WPlot x_a, y_a, objCol
+    ;NPlot x_a, y_a
+  Else
+    ;Circlef x_a, y_a, objRadius_x, objRadius_y, objCol
+    ;WCircle x_a, y_a, objRadius_y, objCol
+    ;NEllipse x_a, y_a, objRadius_x, objRadius_y
+  End If
+End Statement
+
+areasize.w = 200
+Dim areabuffer.w(areasize)
+
+DEFTYPE .AreaInfo areainfo
+DEFTYPE .TmpRas tmpras
+
+InitArea_ & areainfo, & areabuffer(0), (areasize * 2) / 5
+
+tmparea.l = AllocMem(areasize * 2, #MEMF_CHIP)
+If tmparea = 0
+  NPrint "Unable to allocate RAM!"
+  End
+End If
+
+InitTmpRas_ & tmpras, tmparea, areasize * 2
+
+*myrp.RastPort = *myscreen\RastPort
+*myrp\AreaInfo = &areainfo
+*myrp\FgPen = 1
+
+AreaEllipse_ * myrp, center_x, center_y, 50, 50
+AreaEnd_ * myrp
+
+;calcLoopupTable{}
+;drawCircleMain{ * myrp, 50, 1}
+
+Print "START: ", Hours , ":", Mins, ":", Secs
+
+angle.w = 0
+For i = 0 To 0
+  angle = 0
+  While angle < 360
+    ;drawCircleObj{center_x, center_y, firstCircleCycle, angle, firstCircleRadius, 0}
+    ;drawCircleObj{center_x, center_y, firstCircleCycle, angle + 1, firstCircleRadius, 1}
+
+    ;VWait 1
+    ;vvblank_Wait{1}
+
+    angle = angle + 1
+  Wend
+Next
+
+NPrint "END: ",Hours ,":",Mins,":", Secs
+
+MouseWait
+
+;Repeat
+;  IDCMP.l = NWaitWindowEvent
+;Until IDCMP = #IDCMP_CLOSEWINDOW
+
+End
+
