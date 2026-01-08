@@ -1,0 +1,230 @@
+#include <exec/types.h>
+#include <exec/memory.h>
+#include <exec/tasks.h>
+
+#include <graphics/gfxbase.h>
+#include <intuition/intuition.h>
+
+#include <clib/exec_protos.h>
+#include <clib/graphics_protos.h>
+#include <clib/intuition_protos.h>
+#include <clib/dos_protos.h>
+#include <clib/alib_protos.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+struct Library *GfxBase = NULL;
+struct Library *IntuitionBase = NULL;
+
+struct Window *win = NULL;
+struct RastPort *rport = NULL;
+
+UWORD wWidth, wHeight, wCenterX, wCenterY;
+
+APTR tmpbuf = NULL;
+BOOL appLoopDone = FALSE;
+
+void cleanup() {
+	if(GfxBase)
+		CloseLibrary(GfxBase);
+	if(IntuitionBase)
+		CloseLibrary(IntuitionBase);
+	if(tmpbuf)
+		FreeVec(tmpbuf);
+	if(win)
+		CloseWindow(win);
+}
+
+void openLibs() {
+	if(!(GfxBase = OpenLibrary("graphics.library", 39L))) {
+		printf("Unable to open gfx library!\n");
+		cleanup();
+		exit(1);
+	}
+	printf("Gfx lib opened.\n");
+
+	if(!(IntuitionBase = OpenLibrary("intuition.library", 39L))) {
+		printf("Unable to open intuition library!\n");
+		cleanup();
+		exit(1);
+	}
+	printf("Intuition lib opened!\n");
+}
+
+void openWindow() {
+	if(!(win = OpenWindowTags(NULL,
+		WA_NoCareRefresh, TRUE,
+		WA_Activate, TRUE,
+		WA_Borderless, FALSE,
+		WA_Backdrop, FALSE,
+		WA_SizeGadget, TRUE,
+		WA_DepthGadget, TRUE,
+		WA_CloseGadget, TRUE,
+		WA_Title, "My Window",
+		WA_IDCMP, IDCMP_CLOSEWINDOW,
+		TAG_DONE
+	))) {
+		printf("Unable to open window!\n");
+		cleanup();
+		exit(1);
+	}
+	printf("Window opened.\n");
+}
+
+#define MAXVECTORS 200
+struct AreaInfo areaInfo;
+struct TmpRas tmpRas;
+BYTE areabuf[MAXVECTORS*5];
+
+void setupDrawEnv() {
+	ULONG tmpbufSize = 0;
+
+	wWidth = win->Width;
+	wHeight = win->Height;
+	wCenterX = wWidth/2;
+	wCenterY = wHeight/2;
+	printf("Window width/height: %i/%i\n", wWidth, wHeight);
+	printf("Window center x/y: %i/%i\n", wCenterX, wCenterY);
+
+	tmpbufSize = wWidth * wHeight;
+	rport = win->RPort;
+
+	printf("Init AreaInfo...\n");
+	InitArea(&areaInfo, &areabuf[0], MAXVECTORS);
+	rport->AreaInfo = &areaInfo;
+	printf("Init AreaInfo...done\n");
+
+	printf("Init TmpRas...\n");
+	tmpbuf = AllocVec(tmpbufSize, MEMF_CHIP | MEMF_CLEAR);
+	InitTmpRas(&tmpRas, tmpbuf, RASSIZE(wWidth, wHeight));
+	rport->TmpRas = &tmpRas;
+	printf("Init TmpRas...done\n");
+}
+
+void calcEllipseRad(LONG radius, LONG angle, LONG *x_a, LONG *y_a) {
+	double rad;
+	rad = (angle * 3.14) / 180.0;
+	//printf("rad: %f\n", rad);
+	*x_a = (LONG)((double)radius * cos(rad));
+	*y_a = (LONG)((double)radius * sin(rad));
+}
+
+void myDrawEllipse(LONG x, LONG y, LONG rad_x, LONG rad_y, BOOL fill, ULONG col) {
+	SetAPen(rport, col);
+	if(fill) {
+		AreaEllipse(rport, x, y, rad_x, rad_y);
+		AreaEnd(rport);
+	}
+	else {
+		DrawEllipse(rport, x, y, rad_x, rad_y);
+	}
+}
+
+struct Trabant {
+    UWORD sphereRad;
+    UWORD radius;
+    UWORD color;
+    UWORD drawStep;
+};
+
+#define NUM_TRABANTS 2
+struct Trabant trabants[NUM_TRABANTS] = {
+    {50, 5, 1, 1},
+    {100, 3, 4, 2}
+};
+
+void drawLoop(void) {
+	ULONG angle = 0;
+	UWORD trabant = 0;
+	LONG x_a, y_a, eff_x, eff_y;
+	printf("Entering draw loop...\n");
+
+	myDrawEllipse(wCenterX, wCenterY, 20, 20, TRUE, 2);
+
+	while(!appLoopDone) {
+		//printf("Draw loop...\n");
+
+        for(angle = 0;angle < 360 && !appLoopDone;angle++) {
+            for(trabant = 0;trabant < NUM_TRABANTS;trabant++) {
+                struct Trabant t = trabants[trabant];
+                
+                if(angle % t.drawStep == 0) {
+                    // draw new ellipse
+            		calcEllipseRad(t.sphereRad, angle, &x_a, &y_a);
+            		eff_x = x_a+wCenterX;
+            		eff_y = y_a+wCenterY;
+                    myDrawEllipse(eff_x, eff_y, t.radius, t.radius, TRUE, 0);
+            
+                    // undraw old ellipse
+            		calcEllipseRad(t.sphereRad, angle+t.drawStep, &x_a, &y_a);
+            		eff_x = x_a+wCenterX;
+            		eff_y = y_a+wCenterY;
+            		myDrawEllipse(eff_x, eff_y, t.radius, t.radius, TRUE, t.color);
+                }
+            }
+            Delay(1);
+        }
+	}
+
+	printf("Exiting draw loop.\n");
+}
+
+char *taskName = "PlanetsLoop";
+struct Task *task = NULL;
+ULONG STACK_SIZE = 4096L;
+
+void handleMessagesLoop() {
+	struct IntuiMessage *imsg;
+
+	printf("Handle messages loop...\n");
+
+	while(!appLoopDone) {
+		printf("Waiting for sigbit...\n");
+		Wait(1L << win->UserPort->mp_SigBit);
+
+		while(imsg = (struct IntuiMessage*) GetMsg(win->UserPort)) {
+			printf("Received msg: %i\n", imsg->Code);
+			ReplyMsg((struct Message*)imsg);
+
+			switch (imsg->Class) {
+				case IDCMP_CLOSEWINDOW:
+					printf("Close gadget pressed...\n");
+					appLoopDone = TRUE;
+					break;
+				default:
+					printf("Unknown message!\n");
+					break;
+			}
+		}
+	}
+
+	printf("Exiting handle messages loop.\n");
+}
+
+int main(int argc, char *argv[]) {
+	openLibs();
+	openWindow();
+	setupDrawEnv();
+
+    printf("Creating task...\n");
+	task = CreateTask(taskName, 0L, drawLoop, STACK_SIZE);
+	if(!task) {
+		printf("Unable to create task!\n");
+		cleanup();
+		exit(1);
+	}
+
+	handleMessagesLoop();
+
+    //Delay(50);
+
+	printf("Cleaning up...\n");
+	cleanup();
+
+	printf("Exiting...\n");
+	return 0;
+}
+
+

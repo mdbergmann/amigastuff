@@ -1,0 +1,187 @@
+; project configuration (do not delete)
+
+(compiler
+
+    (alias "vbcc/classic")
+
+    (makefile "makefiles/vbcc-classic/makefile")
+
+    (make "make -f %makefile %target")
+
+    (executable "bin/vbcc-classic/CPlanets")
+
+    (stack "262144")
+
+    (target "")
+
+    (arguments "")
+
+    (options
+
+        "+aos68k"
+
+        "-cpu=68020"
+
+        "-lm040"
+
+        "-cpp-comments"
+
+        "-c99"
+
+        "-Ivbcc:targets/m68k-amigaos/posixinclude/"
+
+        "-lamiga"
+
+        "-lauto"
+    )
+)
+
+(compiler
+
+    (alias "sas-c/classic")
+
+    (makefile "makefiles/sas-c-classic/makefile")
+
+    (make "smake -f %makefile %target")
+
+    (executable "bin/sas-c-classic/CPlanets")
+
+    (stack "16384")
+
+    (target "")
+
+    (arguments "")
+)
+
+; project configuration (do not delete)
+
+(compiler
+
+    (alias "vbcc/classic")
+
+    (makefile "makefiles/vbcc-classic/makefile")
+
+    (make "make -f %makefile %target")
+
+    (executable "bin/vbcc-classic/CPlanets")
+
+    (stack "262144")
+
+    (target "")
+
+    (options
+
+        "+aos68k"
+
+        "-cpu=68020"
+
+        "-c99"
+
+        "-lamiga"
+
+        "-auto"
+    )
+)
+
+(compiler
+
+    (alias "gcc/classic")
+
+    (makefile "makefiles/gcc-classic/makefile")
+
+    (make "devkits:c/make -f %makefile %target")
+
+    (executable "bin/gcc-classic/CPlanets")
+
+    (stack "65536")
+
+    (target "")
+
+    (arguments "")
+
+    (options
+
+        "-lm"
+
+        "-noixemul"
+
+        "-m68020"
+    )
+)
+
+; project configuration (do not delete)
+
+(compiler
+
+    (alias "vbcc/classic")
+
+    (makefile "makefiles/vbcc-classic/makefile")
+
+    (make "make -f %makefile %target")
+
+    (executable "bin/vbcc-classic/CPlanets")
+
+    (stack "262144")
+
+    (target "")
+
+    (options
+
+        "+aos68k"
+
+        "-cpu=68020"
+
+        "-c99"
+
+        "-lamiga"
+
+        "-auto"
+    )
+)
+
+(compiler
+
+    (alias "sas-c/classic")
+
+    (makefile "makefiles/sas-c-classic/makefile")
+
+    (make "smake -f %makefile %target")
+
+    (executable "bin/sas-c-classic/CPlanets")
+
+    (stack "16384")
+
+    (target "")
+
+    (arguments "")
+)
+
+; project configuration (do not delete)
+
+(compiler
+
+    (alias "vbcc/classic")
+
+    (makefile "makefiles/vbcc-classic/makefile")
+
+    (make "make -f %makefile %target")
+
+    (executable "bin/vbcc-classic/CPlanets")
+
+    (stack "262144")
+
+    (target "")
+
+    (options
+
+        "+aos68k"
+
+        "-cpu=68020"
+
+        "-c99"
+
+        "-lamiga"
+
+        "-auto"
+    )
+)

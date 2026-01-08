@@ -1,0 +1,8 @@
+MATH=STANDARD
+CPU=68020
+ANSI
+LINK
+STRICT
+LIBRARY=devlibs3:amiga.lib
+PROGRAMNAME=bin/sas-c-classic/CPlanets
+OBJECTNAME=o/sas-c-classic/
