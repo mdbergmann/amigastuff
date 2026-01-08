@@ -18,303 +18,331 @@ No Global PPC Destruktors
 M68K Code
 
 
-  Hunk #0 ( Far Public ) 15432 Bytes (0x3c48)
+  Hunk #0 ( Far Public ) 15820 Bytes (0x3dcc)
   __startup68K = 0 (0x0) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/startups/startup.o
   _exit = 424 (0x1a8) referenced 3 times
     File Workbench:DevelAdd/StormC/StormSYS/startups/startup.o
   _cleanup = 460 (0x1cc) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _openLibs = 512 (0x200) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _openWindow = 676 (0x2a4) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _drawEllipse = 826 (0x33a) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _calcEllipseRad = 946 (0x3b2) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _drawTrabant = 1150 (0x47e) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _handleMessages = 1334 (0x536) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _setupDrawEnv = 1464 (0x5b8) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _mainLoop = 1766 (0x6e6) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _main = 1914 (0x77a) referenced 2 times
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _fflush = 2464 (0x9a0) referenced 1 times
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _openLibs = 556 (0x22c) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _openWindow = 720 (0x2d0) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _drawEllipse = 870 (0x366) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _calcEllipseRad = 990 (0x3de) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _drawTrabant = 1194 (0x4aa) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _setupDrawEnv = 1378 (0x562) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _drawLoop = 1672 (0x688) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _handleMessagesLoop = 1720 (0x6b8) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _main = 1930 (0x78a) referenced 2 times
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _fflush = 2756 (0xac4) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _setvbuf = 2548 (0x9f4) referenced 1 times
+  _setvbuf = 2840 (0xb18) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaread = 2768 (0xad0) referenced 6 times
+  _amigaread = 3060 (0xbf4) referenced 6 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigareadunget = 3192 (0xc78) referenced 1 times
+  _amigareadunget = 3484 (0xd9c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigawrite = 3292 (0xcdc) referenced 4 times
+  _amigawrite = 3584 (0xe00) referenced 4 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaeof = 3860 (0xf14) referenced 3 times
+  _amigaeof = 4152 (0x1038) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaseek = 3884 (0xf2c) referenced 3 times
+  _amigaseek = 4176 (0x1050) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigagetc = 4228 (0x1084) referenced 5 times
+  _amigagetc = 4520 (0x11a8) referenced 5 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigagetcunget = 4284 (0x10bc) referenced 1 times
+  _amigagetcunget = 4576 (0x11e0) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaungetc = 4316 (0x10dc) referenced 3 times
+  _amigaungetc = 4608 (0x1200) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaputc = 4348 (0x10fc) referenced 3 times
+  _amigaputc = 4640 (0x1220) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaflush = 4408 (0x1138) referenced 8 times
+  _amigaflush = 4700 (0x125c) referenced 8 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _amigaclose = 4664 (0x1238) referenced 3 times
+  _amigaclose = 4956 (0x135c) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _INIT_0_InitFiles = 4772 (0x12a4) unused, maybe local
+  _INIT_0_InitFiles = 5064 (0x13c8) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _EXIT_5_InitFiles = 4844 (0x12ec) unused, maybe local
+  _EXIT_5_InitFiles = 5136 (0x1410) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _memcpy = 4928 (0x1340) referenced 2 times
+  _memcpy = 5220 (0x1464) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _malloc = 4992 (0x1380) referenced 1 times
+  _malloc = 5284 (0x14a4) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _free = 5380 (0x1504) referenced 2 times
+  _free = 5672 (0x1628) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _EXIT_4_free = 5556 (0x15b4) unused, maybe local
+  _EXIT_4_free = 5848 (0x16d8) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _formatted_out = 6132 (0x17f4) referenced 1 times
+  _formatted_out = 6424 (0x1918) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _printf = 8208 (0x2010) referenced 1 times
+  _printf = 8500 (0x2134) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _INIT_5_InitStdIOFiles = 8260 (0x2044) unused, maybe local
+  _INIT_5_InitStdIOFiles = 8552 (0x2168) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _EXIT_5_InitStdIOFiles = 8494 (0x212e) unused, maybe local
+  _EXIT_5_InitStdIOFiles = 8786 (0x2252) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _strlen = 8540 (0x215c) referenced 4 times
+  _strlen = 8832 (0x2280) referenced 4 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _signed_out = 8568 (0x2178) referenced 1 times
+  _signed_out = 8860 (0x229c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _signed_out_l = 9222 (0x2406) referenced 1 times
+  _signed_out_l = 9514 (0x252a) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _unsigned_out = 9312 (0x2460) referenced 1 times
+  _unsigned_out = 9604 (0x2584) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _unsigned_out_l = 9904 (0x26b0) referenced 2 times
+  _unsigned_out_l = 10196 (0x27d4) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _char_out = 10424 (0x28b8) referenced 1 times
+  _char_out = 10716 (0x29dc) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _string_out = 10564 (0x2944) referenced 1 times
+  _string_out = 10856 (0x2a68) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  Close = 10756 (0x2a04) unused, maybe local
+  Close = 11048 (0x2b28) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Close = 10756 (0x2a04) referenced 1 times
+  _Close = 11048 (0x2b28) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Read = 10776 (0x2a18) unused, maybe local
+  Read = 11068 (0x2b3c) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Read = 10776 (0x2a18) referenced 1 times
+  _Read = 11068 (0x2b3c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Write = 10804 (0x2a34) unused, maybe local
+  Write = 11096 (0x2b58) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Write = 10804 (0x2a34) referenced 2 times
+  _Write = 11096 (0x2b58) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Input = 10832 (0x2a50) unused, maybe local
+  Input = 11124 (0x2b74) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Input = 10832 (0x2a50) referenced 1 times
+  _Input = 11124 (0x2b74) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Output = 10848 (0x2a60) unused, maybe local
+  Output = 11140 (0x2b84) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Output = 10848 (0x2a60) referenced 1 times
+  _Output = 11140 (0x2b84) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Seek = 10864 (0x2a70) unused, maybe local
+  Seek = 11156 (0x2b94) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Seek = 10864 (0x2a70) referenced 3 times
+  _Seek = 11156 (0x2b94) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  DeleteFile = 10892 (0x2a8c) unused, maybe local
+  DeleteFile = 11184 (0x2bb0) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _DeleteFile = 10892 (0x2a8c) referenced 1 times
+  _DeleteFile = 11184 (0x2bb0) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  IoErr = 10912 (0x2aa0) unused, maybe local
+  IoErr = 11204 (0x2bc4) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _IoErr = 10912 (0x2aa0) referenced 1 times
+  _IoErr = 11204 (0x2bc4) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Delay = 10928 (0x2ab0) unused, maybe local
+  Delay = 11220 (0x2bd4) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Delay = 10928 (0x2ab0) referenced 1 times
+  _Delay = 11220 (0x2bd4) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  IsInteractive = 10948 (0x2ac4) unused, maybe local
+  IsInteractive = 11240 (0x2be8) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _IsInteractive = 10948 (0x2ac4) referenced 1 times
+  _IsInteractive = 11240 (0x2be8) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  NameFromFH = 10968 (0x2ad8) unused, maybe local
+  NameFromFH = 11260 (0x2bfc) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _NameFromFH = 10968 (0x2ad8) referenced 1 times
+  _NameFromFH = 11260 (0x2bfc) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  GetProgramName = 10996 (0x2af4) unused, maybe local
+  GetProgramName = 11288 (0x2c18) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _GetProgramName = 10996 (0x2af4) referenced 1 times
+  _GetProgramName = 11288 (0x2c18) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  FilePart = 11024 (0x2b10) unused, maybe local
+  FilePart = 11316 (0x2c34) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _FilePart = 11024 (0x2b10) referenced 1 times
+  _FilePart = 11316 (0x2c34) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  AddPart = 11044 (0x2b24) unused, maybe local
+  AddPart = 11336 (0x2c48) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _AddPart = 11044 (0x2b24) referenced 1 times
+  _AddPart = 11336 (0x2c48) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  VPrintf = 11072 (0x2b40) unused, maybe local
+  VPrintf = 11364 (0x2c64) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _VPrintf = 11072 (0x2b40) referenced 1 times
+  _VPrintf = 11364 (0x2c64) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Allocate = 11100 (0x2b5c) unused, maybe local
+  Forbid = 11392 (0x2c80) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Allocate = 11100 (0x2b5c) referenced 1 times
+  _Forbid = 11392 (0x2c80) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Deallocate = 11124 (0x2b74) unused, maybe local
+  Permit = 11408 (0x2c90) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Deallocate = 11124 (0x2b74) referenced 1 times
+  _Permit = 11408 (0x2c90) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  AllocMem = 11152 (0x2b90) unused, maybe local
+  Allocate = 11424 (0x2ca0) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _AllocMem = 11152 (0x2b90) referenced 3 times
+  _Allocate = 11424 (0x2ca0) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  FreeMem = 11176 (0x2ba8) unused, maybe local
+  Deallocate = 11448 (0x2cb8) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _FreeMem = 11176 (0x2ba8) referenced 5 times
+  _Deallocate = 11448 (0x2cb8) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  AddHead = 11200 (0x2bc0) unused, maybe local
+  AllocMem = 11476 (0x2cd4) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _AddHead = 11200 (0x2bc0) referenced 1 times
+  _AllocMem = 11476 (0x2cd4) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  Remove = 11224 (0x2bd8) unused, maybe local
+  FreeMem = 11500 (0x2cec) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _Remove = 11224 (0x2bd8) referenced 1 times
+  _FreeMem = 11500 (0x2cec) referenced 4 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  RemHead = 11244 (0x2bec) unused, maybe local
+  AddHead = 11524 (0x2d04) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _RemHead = 11244 (0x2bec) referenced 2 times
+  _AddHead = 11524 (0x2d04) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  FindTask = 11264 (0x2c00) unused, maybe local
+  Remove = 11548 (0x2d1c) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _FindTask = 11264 (0x2c00) referenced 1 times
+  _Remove = 11548 (0x2d1c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  GetMsg = 11284 (0x2c14) unused, maybe local
+  RemHead = 11568 (0x2d30) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _GetMsg = 11284 (0x2c14) referenced 1 times
+  _RemHead = 11568 (0x2d30) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  ReplyMsg = 11304 (0x2c28) unused, maybe local
+  FindTask = 11588 (0x2d44) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _ReplyMsg = 11304 (0x2c28) referenced 1 times
+  _FindTask = 11588 (0x2d44) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  CloseLibrary = 11324 (0x2c3c) unused, maybe local
+  Wait = 11608 (0x2d58) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _CloseLibrary = 11324 (0x2c3c) referenced 2 times
+  _Wait = 11608 (0x2d58) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  OpenLibrary = 11344 (0x2c50) unused, maybe local
+  GetMsg = 11628 (0x2d6c) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _OpenLibrary = 11344 (0x2c50) referenced 2 times
+  _GetMsg = 11628 (0x2d6c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  DrawEllipse = 11368 (0x2c68) unused, maybe local
+  ReplyMsg = 11648 (0x2d80) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _DrawEllipse = 11368 (0x2c68) referenced 1 times
+  _ReplyMsg = 11648 (0x2d80) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  AreaEllipse = 11400 (0x2c88) unused, maybe local
+  CloseLibrary = 11668 (0x2d94) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _AreaEllipse = 11400 (0x2c88) referenced 1 times
+  _CloseLibrary = 11668 (0x2d94) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  AreaEnd = 11432 (0x2ca8) unused, maybe local
+  OpenLibrary = 11688 (0x2da8) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _AreaEnd = 11432 (0x2ca8) referenced 1 times
+  _OpenLibrary = 11688 (0x2da8) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  InitArea = 11452 (0x2cbc) unused, maybe local
+  AllocVec = 11712 (0x2dc0) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _InitArea = 11452 (0x2cbc) referenced 1 times
+  _AllocVec = 11712 (0x2dc0) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  SetAPen = 11480 (0x2cd8) unused, maybe local
+  FreeVec = 11736 (0x2dd8) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _SetAPen = 11480 (0x2cd8) referenced 1 times
+  _FreeVec = 11736 (0x2dd8) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  InitTmpRas = 11504 (0x2cf0) unused, maybe local
+  DrawEllipse = 11756 (0x2dec) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _InitTmpRas = 11504 (0x2cf0) referenced 1 times
+  _DrawEllipse = 11756 (0x2dec) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  CloseWindow = 11532 (0x2d0c) unused, maybe local
+  AreaEllipse = 11788 (0x2e0c) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _CloseWindow = 11532 (0x2d0c) referenced 1 times
+  _AreaEllipse = 11788 (0x2e0c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  EasyRequest = 11552 (0x2d20) unused, maybe local
+  AreaEnd = 11820 (0x2e2c) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _EasyRequest = 11552 (0x2d20) referenced 1 times
+  _AreaEnd = 11820 (0x2e2c) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  OpenWindowTags = 11584 (0x2d40) unused, maybe local
+  InitArea = 11840 (0x2e40) unused, maybe local
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _OpenWindowTags = 11584 (0x2d40) referenced 1 times
+  _InitArea = 11840 (0x2e40) referenced 1 times
     File Workbench:DevelAdd/StormC/Lib/amiga.lib
-  _setjmp = 11608 (0x2d58) referenced 1 times
+  SetAPen = 11868 (0x2e5c) unused, maybe local
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _SetAPen = 11868 (0x2e5c) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  InitTmpRas = 11892 (0x2e74) unused, maybe local
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _InitTmpRas = 11892 (0x2e74) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  CloseWindow = 11920 (0x2e90) unused, maybe local
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _CloseWindow = 11920 (0x2e90) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  EasyRequest = 11940 (0x2ea4) unused, maybe local
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _EasyRequest = 11940 (0x2ea4) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  OpenWindowTags = 11972 (0x2ec4) unused, maybe local
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _OpenWindowTags = 11972 (0x2ec4) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _setjmp = 11996 (0x2edc) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  _longjmp = 11624 (0x2d68) referenced 1 times
+  _longjmp = 12012 (0x2eec) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  _floor = 11644 (0x2d7c) referenced 1 times
+  _floor = 12032 (0x2f00) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  _sin = 11668 (0x2d94) referenced 1 times
+  _sin = 12056 (0x2f18) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  _cos = 11692 (0x2dac) referenced 1 times
+  _cos = 12080 (0x2f30) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  _frexp = 11716 (0x2dc4) referenced 1 times
+  _frexp = 12104 (0x2f48) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  _double_out = 12372 (0x3054) referenced 1 times
+  _double_out = 12760 (0x31d8) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/math020.lib
-  main() = 13828 (0x3604) referenced 2 times
+  main() = 14216 (0x3788) referenced 2 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  main(int,char **) = 13836 (0x360c) referenced 2 times
+  main(int,char **) = 14224 (0x3790) referenced 2 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _wbmain__FP9WBStartup = 13844 (0x3614) unused, maybe local
+  _wbmain__FP9WBStartup = 14232 (0x3798) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  wbmain(WBStartup *) = 13844 (0x3614) referenced 2 times
+  wbmain(WBStartup *) = 14232 (0x3798) referenced 2 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _wbmain = 13852 (0x361c) referenced 2 times
+  _wbmain = 14240 (0x37a0) referenced 2 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  main(int,char *) = 13856 (0x3620) referenced 1 times
+  main(int,char *) = 14244 (0x37a4) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _EXIT_0_Main = 14316 (0x37ec) unused, maybe local
+  _EXIT_0_Main = 14704 (0x3970) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _INIT_1_DOS_c__DOSBase = 14368 (0x3820) unused, maybe local
+  _INIT_1_DOS_c__DOSBase = 14756 (0x39a4) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _EXIT_1_DOS_c__DOSBase = 14404 (0x3844) unused, maybe local
+  _EXIT_1_DOS_c__DOSBase = 14792 (0x39c8) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _InitModules = 14480 (0x3890) referenced 1 times
+  _InitModules = 14868 (0x3a14) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _CleanupModules = 14556 (0x38dc) referenced 1 times
+  _CleanupModules = 14944 (0x3a60) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  LibBaseC::LibBaseC(char *,unsigned long,short) = 14644 (0x3934) referenced 3 times
+  LibBaseC::LibBaseC(char *,unsigned long,short) = 15032 (0x3ab8) referenced 3 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  LibBaseC::~LibBaseC() = 15060 (0x3ad4) referenced 3 times
+  LibBaseC::~LibBaseC() = 15448 (0x3c58) referenced 3 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _INIT_2_MathIEEEDoubBas_c__MathIeeeDoubBasBase = 15092 (0x3af4) unused, maybe local
+  _INIT_2_MathIEEEDoubBas_c__MathIeeeDoubBasBase = 15480 (0x3c78) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _EXIT_2_MathIEEEDoubBas_c__MathIeeeDoubBasBase = 15128 (0x3b18) unused, maybe local
+  _EXIT_2_MathIEEEDoubBas_c__MathIeeeDoubBasBase = 15516 (0x3c9c) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _INIT_2_MathIEEEDoubTrans_c__MathIeeeDoubTransBase = 15176 (0x3b48) unused, maybe local
+  _INIT_2_MathIEEEDoubTrans_c__MathIeeeDoubTransBase = 15564 (0x3ccc) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _EXIT_2_MathIEEEDoubTrans_c__MathIeeeDoubTransBase = 15212 (0x3b6c) unused, maybe local
+  _EXIT_2_MathIEEEDoubTrans_c__MathIeeeDoubTransBase = 15600 (0x3cf0) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  Neg64 = 15260 (0x3b9c) referenced 1 times
+  Neg64 = 15648 (0x3d20) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  ___neg64 = 15260 (0x3b9c) unused, maybe local
+  ___neg64 = 15648 (0x3d20) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  SDiv64 = 15268 (0x3ba4) referenced 1 times
+  SDiv64 = 15656 (0x3d28) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  UDiv64 = 15308 (0x3bcc) referenced 1 times
+  UDiv64 = 15696 (0x3d50) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  ___uintdivmod64 = 15308 (0x3bcc) unused, maybe local
+  ___uintdivmod64 = 15696 (0x3d50) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  ___intdivmod64 = 15268 (0x3ba4) unused, maybe local
+  ___intdivmod64 = 15656 (0x3d28) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  UMod64 = 15408 (0x3c30) referenced 1 times
+  UMod64 = 15796 (0x3db4) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  ___uintmod64 = 15408 (0x3c30) unused, maybe local
+  ___uintmod64 = 15796 (0x3db4) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  SMod64 = 15420 (0x3c3c) referenced 1 times
+  SMod64 = 15808 (0x3dc0) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
-  ___intmod64 = 15420 (0x3c3c) unused, maybe local
+  ___intmod64 = 15808 (0x3dc0) unused, maybe local
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcsupport020.lib
+
+  Hunk #1 ( Merged Public ) 224 Bytes (0xe0)
+  _NewList = 0 (0x0) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _CreateTask = 20 (0x14) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _DeleteTask = 206 (0xce) referenced 1 times
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
 
 PowerPC Code
 
@@ -322,59 +350,67 @@ PowerPC Code
 Data
 
 
-  Hunk #1 ( Far Public ) 952 Bytes (0x3b8)
+  Hunk #2 ( Far Public ) 1000 Bytes (0x3e8)
   _GfxBase = 0 (0x0) referenced 6 times
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _IntuitionBase = 4 (0x4) referenced 4 times
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _win = 8 (0x8) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _rport = 12 (0xc) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _tmpbuf = 16 (0x10) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _tmpbufSize = 20 (0x14) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
-  _std__out = 400 (0x190) referenced 3 times
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _taskName = 20 (0x14) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _task = 24 (0x18) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _STACK_SIZE = 28 (0x1c) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _appLoopDone = 32 (0x20) unused, maybe local
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
+  _std__out = 416 (0x1a0) referenced 3 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _std__in = 488 (0x1e8) referenced 2 times
+  _std__in = 504 (0x1f8) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _std__err = 576 (0x240) referenced 2 times
+  _std__err = 592 (0x250) referenced 2 times
     File Workbench:DevelAdd/StormC/Lib/storm020.lib
-  _DOSBase = 856 (0x358) referenced 16 times
+  _TaskMemTemplate = 680 (0x2a8) unused, maybe local
+    File Workbench:DevelAdd/StormC/Lib/amiga.lib
+  _DOSBase = 904 (0x388) referenced 16 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _not_open__LibBaseC = 868 (0x364) referenced 1 times
+  _not_open__LibBaseC = 916 (0x394) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _MathIeeeDoubBasBase = 872 (0x368) referenced 6 times
+  _MathIeeeDoubBasBase = 920 (0x398) referenced 6 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  _MathIeeeDoubTransBase = 876 (0x36c) referenced 2 times
+  _MathIeeeDoubTransBase = 924 (0x39c) referenced 2 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  ___stacksize = 880 (0x370) referenced 1 times
+  ___stacksize = 928 (0x3a0) referenced 1 times
     File Workbench:DevelAdd/StormC/StormSYS/lib/stormcstartup020.lib
-  ___init_table68k = 888 (0x378) referenced 2 times
+  ___init_table68k = 936 (0x3a8) referenced 2 times
     File <Internal Assembled>
-  ___exit_table68k = 920 (0x398) referenced 1 times
+  ___exit_table68k = 968 (0x3c8) referenced 1 times
     File <Internal Assembled>
 
 BSS
 
 
-  Hunk #2 ( Far Public ) 1776 Bytes (0x6f0)
-  _SysBase = 0 (0x0) referenced 13 times
+  Hunk #3 ( Far Public ) 1776 Bytes (0x6f0)
+  _SysBase = 0 (0x0) referenced 19 times
     File Workbench:DevelAdd/StormC/StormSYS/startups/startup.o
   _wWidth = 176 (0xb0) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _wHeight = 178 (0xb2) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _wCenterX = 180 (0xb4) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _wCenterY = 182 (0xb6) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _areaInfo = 184 (0xb8) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _tmpRas = 208 (0xd0) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
   _areabuf = 216 (0xd8) unused, maybe local
-    File Workbench:DevelAdd/Sources/StormC/Planets/objects_debug/Planets.o
+    File Workbench:DevelAdd/Sources/amigasources/StormCProjs/Planets/objects_debug/Planets.o
 
 END
