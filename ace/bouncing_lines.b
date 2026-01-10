@@ -1,16 +1,6 @@
 ' Bouncing Color Cycling Lines for ACE BASIC
 ' Creates animated lines that bounce off window borders with cycling colors
 
-' Open a console window to log stuff
-OPEN "O", #1, "CON:0/0/640/50/Debug window"
-
-PRINT #1, "Hallo World"
-
-' Open window: ID=1, Title, Position (50,50)-(650,450), Type=31 (Standard)
-WINDOW 1, "Bouncing Color Lines", (50,50)-(650,450), 31
-' Set window as current output window
-WINDOW OUTPUT 1
-
 ' Define our custom font for exact line height
 GLOBAL fontHeight
 fontHeight = WINDOW(13)
@@ -34,33 +24,38 @@ STRUCT MyLine
   LONGINT deltaY1
   LONGINT deltaX2
   LONGINT deltaY2
-  SHORTINT colorIndex
+  SHORTINT colori
 END STRUCT
 
 ' arrax of LONGINTs to hold addresses
 DIM lines&(numLines)
 
-' Color array (ACE BASIC standard colors)
-DIM colors(7)
-colors(0) = 1  ' Red
-colors(1) = 2  ' Green
-colors(2) = 3  ' Blue
-colors(3) = 4  ' Cyan
-colors(4) = 5  ' Magenta
-colors(5) = 6  ' Yellow
-colors(6) = 7  ' White
-colors(7) = 8  ' Orange/Brown
+SUB dlog(STRING expr)
+  PRINT #1, expr
+END SUB
 
-' Event handling for window
-ON WINDOW GOTO quit
-WINDOW ON
+SUB InitConsole
+  ' Open a console window to log stuff
+  OPEN "O", #1, "CON:0/0/640/50/Debug window"
+  dlog("Welcome...")
+END SUB
+
+SUB InitWindow
+  ' Open window: ID=1, Title, Position (50,50)-(650,450), Type=31 (Standard)
+  WINDOW 1, "Bouncing Color Lines", (50,50)-(650,450), 31
+  ' Set window as current output window
+  WINDOW OUTPUT 1
+  ' Event handling for window
+  ON WINDOW GOTO quit
+  WINDOW ON
+END SUB
 
 SUB DefineWindowSize
-    fullWindowWidth = WINDOW(2)
-    windowWidth = fullWindowWidth
+  fullWindowWidth = WINDOW(2)
+  windowWidth = fullWindowWidth
 
-    fullWindowHeight = WINDOW(3)
-    windowHeight = fullWindowHeight-(4*fontHeight)
+  fullWindowHeight = WINDOW(3)
+  windowHeight = fullWindowHeight-(4*fontHeight)
 END SUB
 
 SUB ADDRESS NewLine
@@ -75,9 +70,9 @@ SUB InitLines
     ' Initialize lines
     FOR i = 0 TO numLinesArrEnd
       lines&(i) = NewLine()
-      PRINT #1, "Line&: ";lines&(i)
+      dlog("Line&: "+STR$(lines&(i)))
       _line = lines&(i)
-      PRINT #1, "_line&: ";_line
+      dlog("_line&: "+STR$(_line))
 
       ' Random start positions
       _line->startX = INT(RND * (windowWidth - 100)) + 50
@@ -97,9 +92,9 @@ SUB InitLines
       IF _line->deltaY2 = 0 THEN _line->deltaY2 = 1
 
       ' Random start color
-      _line->colorIndex = INT(RND * 8)
+      _line->colori = i+1
 
-      PRINT #1, "sX=";_line->startX;",sY=";_line->startY;"col=";_line->colorIndex
+      dlog("sX ="+STR$(_line->startX)+",sY ="+STR$(_line->startY)+",col ="+STR$(_line->colori))
     NEXT i
 END SUB
 
@@ -110,6 +105,8 @@ END SUB
 frameCount = 0
 startTime = TIMER
 SUB DrawFPS
+  SHARED frameCount, startTime
+
   ' Calculate and display FPS
   frameCount = frameCount + 1
   currentTime = TIMER
@@ -128,7 +125,6 @@ END SUB
 
 SUB DrawLines
   SHARED lines&
-  SHARED colors
   DECLARE STRUCT myLine *_line
 
   ' Draw and move all lines
@@ -163,11 +159,17 @@ SUB DrawLines
     IF _line->endY > windowHeight THEN _line->endY = windowHeight
 
     ' Draw new line in color
-    COLOR colors(_line->colorIndex), 0
+    COLOR _line->colori, 0
     LINE (_line->startX, _line->startY)-(_line->endX, _line->endY)
   NEXT i
 END SUB
 
+' ------------------------
+' Main area
+' ------------------------
+
+CALL InitConsole
+CALL InitWindow
 CALL DefineWindowSize
 CALL InitLines
 running = -1
