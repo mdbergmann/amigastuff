@@ -1,0 +1,6 @@
+[submodule "ACEBasic"]
+	path = ACEBasic
+	url = https://github.com/mdbergmann/ACEBasic
+[submodule "acec"]
+	path = acec
+	url = https://github.com/mdbergmann/ACEBasic

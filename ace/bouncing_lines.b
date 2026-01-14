@@ -1,15 +1,12 @@
 ' Bouncing Color Cycling Lines for ACE BASIC
 ' Creates animated lines that bounce off window borders with cycling colors
 
-' Define our custom font for exact line height
-GLOBAL fontHeight
-fontHeight = WINDOW(13)
-
 ' Get window width and height
 GLOBAL fullWindowWidth
 GLOBAL fullWindowHeight
 GLOBAL windowWidth
 GLOBAL windowHeight
+GLOBAL fontHeight
 
 ' Number of lines
 CONST numLines = 5
@@ -48,6 +45,10 @@ SUB InitWindow
   ' Event handling for window
   ON WINDOW GOTO quit
   WINDOW ON
+
+  ' Define our custom font for exact line height
+  fontHeight = WINDOW(13)
+  dlog("Font height: "+STR$(fontHeight))
 END SUB
 
 SUB DefineWindowSize
@@ -56,6 +57,7 @@ SUB DefineWindowSize
 
   fullWindowHeight = WINDOW(3)
   windowHeight = fullWindowHeight-(4*fontHeight)
+  ' dlog("Full winheight:"+STR$(fullWindowHeight)+", winheight:"+STR$(windowHeight))
 END SUB
 
 SUB ADDRESS NewLine
@@ -102,27 +104,6 @@ SUB ClearScreen
   LINE (0, 0)-(windowWidth, windowHeight), 0, BF
 END SUB
 
-frameCount = 0
-startTime = TIMER
-SUB DrawFPS
-  SHARED frameCount, startTime
-
-  ' Calculate and display FPS
-  frameCount = frameCount + 1
-  currentTime = TIMER
-  elapsedTime = currentTime - startTime
-  IF elapsedTime >= 1 THEN
-    fps = frameCount / elapsedTime
-    ' draw fps
-    COLOR 3
-    LOCATE INT(WINDOW(3)/(fontHeight*1.05)), 1
-    PRINT "FPS:"; INT(fps * 10) / 10;
-    ' Reset counters
-    frameCount = 0
-    startTime = currentTime
-  END IF
-END SUB
-
 SUB DrawLines
   SHARED lines&
   DECLARE STRUCT myLine *_line
@@ -162,6 +143,31 @@ SUB DrawLines
     COLOR _line->colori, 0
     LINE (_line->startX, _line->startY)-(_line->endX, _line->endY)
   NEXT i
+END SUB
+
+frameCount = 0
+startTime = TIMER
+SUB DrawFPS
+  SHARED frameCount, startTime
+
+  ' Calculate and display FPS
+  frameCount = frameCount + 1
+  currentTime = TIMER
+  elapsedTime = currentTime - startTime
+  IF elapsedTime >= 1 THEN
+    fps = frameCount / elapsedTime
+    ' draw fps
+    COLOR 3
+    effFontHeight = fontHeight * 1.05
+    yPosFloat = WINDOW(3) / effFontHeight
+    yPosInt = INT(yPosFloat)
+    'dlog("Effective fonthight:"+STR$(effFontHeight)+", yPosFloat:"+STR$(yPosFloat)+", yPosInt:"+STR$(yPosInt))
+    LOCATE yPosInt, 1
+    PRINT "FPS:"; INT(fps * 10) / 10;
+    ' Reset counters
+    frameCount = 0
+    startTime = currentTime
+  END IF
 END SUB
 
 ' ------------------------

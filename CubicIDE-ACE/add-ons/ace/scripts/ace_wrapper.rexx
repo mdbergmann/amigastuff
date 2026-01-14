@@ -25,9 +25,9 @@ options results
 /* Specify your compiler and build tool */
 APP = 'ACPP' /* 'APP' */
 RL = 'RemoveLine'
-ACE = 'ACE'
-AS = 'a68k'
-LNK = 'blink'
+ACE = 'ACE'  /* 'ACE_original24' */
+AS = 'vasmm68k_mot' /* 'a68k' */
+LNK = 'vlink' /* 'blink' */
 
 /* check arguments */
 if mode = '' then do
@@ -91,11 +91,13 @@ if mode = 'compile' | mode = 'compile_run' then do
 
     if mode = 'compile_run' then do
         say 'Assembling...'
-        ADDRESS COMMAND AS outputname'.s'
+        /* ADDRESS COMMAND AS outputname'.s'   => a68k */
+        ADDRESS COMMAND AS '-Fhunk -o 'outputname'.o 'outputname'.s'
         say 'Assembling...done'
         call assertNoError('assemble')
         say 'Linking...'
-        ADDRESS COMMAND LNK FROM outputname'.o' 'LIB ace:lib/db.lib ace:lib/ami.lib ace:lib/startup.lib TO 'outputname
+        /* ADDRESS COMMAND LNK FROM outputname'.o' 'LIB ace:lib/db.lib ace:lib/ami.lib ace:lib/startup.lib TO 'outputname */
+        ADDRESS COMMAND LNK '-bamigahunk -x -Bstatic -Cgnu -nostdlib -mrel -o 'outputname' -s 'outputname'.o acelib:startup.lib acelib:db.lib acelib:ami.lib'
         say 'Linking...done'
         call assertNoError('linking')
     end
