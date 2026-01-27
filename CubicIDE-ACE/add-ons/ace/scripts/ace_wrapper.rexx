@@ -26,8 +26,8 @@ options results
 APP = 'ACPP' /* 'APP' */
 RL = 'RemoveLine'
 ACE = 'ACE'  /* 'ACE_original24' */
-AS = 'vasmm68k_mot' /* 'a68k' */
-LNK = 'vlink' /* 'blink' */
+AS = 'ace:bin/vasmm68k_mot' /* 'a68k' */
+LNK = 'ace:bin/vlink' /* 'blink' */
 
 /* check arguments */
 if mode = '' then do

@@ -3,6 +3,7 @@ ALLOC(
 ARG$(
 ASC(
 ATN(
+BIND(
 BIN$(
 CHR$(
 CINT(
