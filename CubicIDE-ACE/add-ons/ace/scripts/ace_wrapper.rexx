@@ -1,5 +1,5 @@
 /*
-    $VER = 0.0.2
+    $VER = 0.0.3
 
     @author: Manfred Bergmann
 
@@ -12,6 +12,9 @@
     3. (opt) flags:
         [echo]: outputs the entered parameters
         [optimize]: optimize compile
+
+    Source file directives (parsed from first 20 lines):
+        REM #using <path.o>   - link with specified submod object file
 
 */
 
@@ -71,6 +74,10 @@ say 'Assembly name: 'assembly_name
 outputname = assembly_name
 say 'Output name: 'outputname
 
+/* Parse #using directives from source file */
+submods = ''
+call parseUsingDirectives input
+
 err = 0
 /* Now compile and or run */
 if mode = 'compile' | mode = 'compile_run' | mode = 'compile_submod' then do
@@ -105,7 +112,7 @@ if mode = 'compile' | mode = 'compile_run' | mode = 'compile_submod' then do
     if mode = 'compile_run' then do
         say 'Linking...'
         /* ADDRESS COMMAND LNK FROM outputname'.o' 'LIB ace:lib/db.lib ace:lib/ami.lib ace:lib/startup.lib TO 'outputname */
-        ADDRESS COMMAND LNK '-bamigahunk -x -Bstatic -Cgnu -nostdlib -mrel -o 'outputname' -s 'outputname'.o acelib:startup.lib acelib:db.lib acelib:ami.lib'
+        ADDRESS COMMAND LNK '-bamigahunk -x -Bstatic -Cgnu -nostdlib -mrel -o 'outputname' -s 'outputname'.o 'submods'acelib:startup.lib acelib:db.lib acelib:ami.lib'
         say 'Linking...done'
         call assertNoError('linking')
     end
@@ -155,4 +162,28 @@ assertNoError: procedure expose RC
         say 'Error on 'label'!'
         exit
     end
+    return
+
+parseUsingDirectives: procedure expose submods
+    parse arg filepath
+    say 'Parsing #using directives from: 'filepath
+    if ~open('srcfile', filepath, 'R') then do
+        say 'Warning: Could not open source file for parsing directives'
+        return
+    end
+    do linenum = 1 to 20
+        if eof('srcfile') then leave
+        line = upper(strip(readln('srcfile')))
+        /* flexible parse: handles "REM #USING", "REM  #USING", etc. */
+        parse var line 'REM' . '#USING' objpath
+        objpath = strip(objpath)
+        if objpath \= '' then do
+            say 'Found submod: 'objpath
+            submods = submods || objpath || ' '
+        end
+    end
+    call close('srcfile')
+    if submods \= '' then
+        say 'Submods to link: 'submods
+    return
 
