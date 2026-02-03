@@ -25,12 +25,7 @@ signal on break_c
 
 options results
 
-/* Specify your compiler and build tool */
-APP = 'ACPP' /* 'APP' */
-RL = 'RemoveLine'
-ACE = 'ACE'  /* 'ACE_original24' */
-AS = 'ace:bin/vasmm68k_mot' /* 'a68k' */
-LNK = 'ace:bin/vlink' /* 'blink' */
+BAS = 'ace:bin/bas'
 
 /* check arguments */
 if mode = '' then do
@@ -81,49 +76,24 @@ call parseUsingDirectives input
 err = 0
 /* Now compile and or run */
 if mode = 'compile' | mode = 'compile_run' | mode = 'compile_submod' then do
-    say 'Preprocessing...'
-    pre_outname = outputname'.pre'
-    ADDRESS COMMAND APP input pre_outname
-    call assertNoError('pre-processing')
-    say 'Preprocessing...done'
-    say 'pre-processing stage 2...'
-    pre2_outname = outputname'.pre2'
-    ADDRESS COMMAND RL pre_outname pre2_outname'.b'
-    call assertNoError('pre-processing2')
-    say 'pre-processing stage 2...done'
     say 'Compiling...'
-    if mode = 'compile_submod' then do
-        ADDRESS COMMAND ACE '-mO 'pre2_outname
+    if mode = 'compile' then do
+        ADDRESS COMMAND BAS '-S 'outputname' 'submods
+    end
+    else if mode = 'compile_submod' then do
+        ADDRESS COMMAND BAS '-mO 'outputname' 'submods
     end
     else do
-        ADDRESS COMMAND ACE pre2_outname
+        ADDRESS COMMAND BAS '-i 'outputname' 'submods
     end
     say 'Compiling...done'
     call assertNoError('compile')
-
-    if mode = 'compile_run' | mode = 'compile_submod' then do
-        say 'Assembling...'
-        /* ADDRESS COMMAND AS outputname'.s'   => a68k */
-        ADDRESS COMMAND AS '-Fhunk -o 'outputname'.o 'outputname'.s'
-        say 'Assembling...done'
-        call assertNoError('assemble')
-    end
-
-    if mode = 'compile_run' then do
-        say 'Linking...'
-        /* ADDRESS COMMAND LNK FROM outputname'.o' 'LIB ace:lib/db.lib ace:lib/ami.lib ace:lib/startup.lib TO 'outputname */
-        ADDRESS COMMAND LNK '-bamigahunk -x -Bstatic -Cgnu -nostdlib -mrel -o 'outputname' -s 'outputname'.o 'submods'acelib:startup.lib acelib:db.lib acelib:ami.lib'
-        say 'Linking...done'
-        call assertNoError('linking')
-    end
 end
 else if mode = 'run' then do
     RC = 0
 end
 else if mode = 'clean' then do
     say 'Deleting generated files...'
-    ADDRESS COMMAND Delete outputname'.pre'
-    ADDRESS COMMAND Delete outputname'.pre2.b'
     ADDRESS COMMAND Delete outputname'.s'
     ADDRESS COMMAND Delete outputname'.o'
     ADDRESS COMMAND Delete outputname
@@ -177,13 +147,13 @@ parseUsingDirectives: procedure expose submods
         /* flexible parse: handles "REM #USING", "REM  #USING", etc. */
         parse var line 'REM' . '#USING' objpath
         objpath = strip(objpath)
-        if objpath \= '' then do
+        if objpath ~= '' then do
             say 'Found submod: 'objpath
             submods = submods || objpath || ' '
         end
     end
     call close('srcfile')
-    if submods \= '' then
+    if submods ~= '' then
         say 'Submods to link: 'submods
     return
 
